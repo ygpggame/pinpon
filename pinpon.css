@@ -1,0 +1,120 @@
+@keyframes rakka {
+    0% {
+        top: 40px;
+    }
+
+    80% {
+        top: 350px;
+    }
+
+    100% {
+        top: 350px;
+    }
+}
+
+@keyframes up {
+    0% {
+        top: 350px;
+    }
+
+    80% {
+        top: 40px;
+    }
+
+    100% {
+        top: 40px;
+    }
+}
+
+@keyframes smash {
+    0% {
+        transform: scale(1.0);
+        top: 350px;
+    }
+
+    50% {
+        transform: scale(2.0);
+        top: 175px;
+    }
+
+    80% {
+        transform: scale(1.5);
+        top: 40px;
+    }
+
+    100% {
+        transform: scale(1.0);
+        top: 40px;
+    }
+}
+
+.rakka {
+    position: absolute;
+    animation-name: rakka;
+    animation-duration: 1.2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.smash {
+    position: absolute;
+    animation-name: smash;
+    animation-duration: 1.2s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+}
+
+.up {
+    position: absolute;
+    animation-name: up;
+    animation-duration: 1.2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.d-none {
+    display: none;
+}
+
+.result {
+    font-size: 20px;
+    color: red;
+}
+
+.back-img {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 550px;
+    height: 360px;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.cara {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+}
+
+.kuma {
+    z-index: 10;
+    width: 70px;
+    height: 70px;
+}
+
+.move-btns {
+    display: flex;
+}
+
+.score-board {
+    display: flex;
+    justify-content: space-between;
+    width: 525px;
+    margin-left: 25px;
+}
+
+.ene {
+    width: 120px;
+    height: 120px;
+}
