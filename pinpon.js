@@ -12,7 +12,7 @@ const startButton = document.getElementById("js-start");
 const result = document.getElementById("js-result");
 let ene = document.getElementById("js-ene");
 let eneImg = document.getElementById("js-ene-img");
-const eneFire = document.getElementById("js-ene-fire"); 
+const eneFire = document.getElementById("js-ene-fire");
 const left = document.getElementById("left");
 const right = document.getElementById("right");
 const fireImg = document.getElementById("js-fire-img");
@@ -22,6 +22,11 @@ const back = document.getElementById("js-back");
 const backFire = document.getElementById("js-back-fire");
 const fireRight = document.getElementById("js-fire-right");
 const fireLeft = document.getElementById("js-fire-left");
+let tp = 0;
+let maxGage = 10;
+let gage = 0;
+const gageFill = document.getElementById('gauge-fill');
+const message = document.getElementById('js-message');
 
 startButton.addEventListener("click", (e) => {
     game();
@@ -46,47 +51,8 @@ function game() {
     });
 };
 
-addEventListener("dblclick", (e) => {
-    fireMovie.classList.remove("d-none");
-    fireMovie.currentTime = 0;
-    fireMovie.play();
-    pinpon.classList.add("d-none");
-    setTimeout(() => {
-        fireMovie.classList.add("d-none");
-    }, 8000);
-    
-    setTimeout(() => {
-        fireImg.style.left = kuma.style.left;
-        fireImg.classList.remove("d-none");
-        fireImg.classList.add("smash");
-        fireKuma.style.left = kuma.style.left;
-        fireKuma.style.top =  kuma.style.top;
-        fireKuma.classList.remove("d-none");
-        fireKuma.classList.add("fadein");
-        kuma.classList.add("d-none");
-        back.classList.add("d-none");
-        backFire.classList.remove("d-none");
-        backFire.classList.add("fadein");
-        eneImg.classList.add("d-none");
-        eneFire.classList.remove("d-none");
-        eneFire.classList.add("fadein"); 
-        fireRight.classList.remove("d-none");
-        fireRight.classList.add("fadein");
-        fireLeft.classList.remove("d-none");
-        fireLeft.classList.add("fadein");
-
-    }, 9000);
-    setTimeout(() => {
-        fire.textContent = "";
-        fireImg.classList.add("d-none");
-        fireImg.classList.remove("smash");
-    }, 10000);
-});
-
 function cogumaRakka() {
     let leftX = 100 + Math.random() * 850;
-    let count = 0;
-    let eneCount = Math.random() * 10;
     pinpon.style.left = leftX + "px";
     pinpon.style.top = 40 + "px";
     pinpon.classList.remove("d-none");
@@ -95,10 +61,9 @@ function cogumaRakka() {
         pinpon.classList.remove("rakka");
         pinpon.classList.add("up");
         if (Math.abs(leftX - basketX) < 100) {
-            count += 1;
-            if (eneCount < count) {
-                score += 1;
-            }
+            tp += 1;
+            gage += 100 / maxGage;
+            updateGauge();
         } else {
             eneScore += 1;
             ene.textContent = eneScore + "点";
@@ -116,7 +81,7 @@ function cogumaRakka() {
             clearInterval(cogumaId);
         }
     }, 2000);
-    result.textContent = "得点" + score + "点";
+    result.textContent = score + "点";
 }
 function kumaCatch() {
     kuma.style.left = basketX + "px"
@@ -124,6 +89,68 @@ function kumaCatch() {
 }
 
 function enePlayer() {
-    eneBasketX =  pinpon.style.left.replace("px", "");
+    eneBasketX = pinpon.style.left.replace("px", "");
     eneImg.style.left = eneBasketX + "px";
 }
+
+function updateGauge() {
+    if (gage > 100) {
+        gage = 100;
+    }
+    gageFill.style.width = gage + '%';
+    console.log(gage);
+    console.log(gageFill);
+    if (gage >= 100) {
+        gageFill.classList.add('full-gauge');
+        message.style.display = 'block';
+    } else {
+        gageFill.classList.remove('full-gauge');
+        message.style.display = 'none';
+    }
+}
+
+addEventListener("dblclick", (e) => {
+    if (gage < 100) {
+        return;
+    }
+    fireSmash();
+});
+
+function fireSmash() {
+    fireMovie.classList.remove("d-none");
+    fireMovie.currentTime = 0;
+    fireMovie.play();
+    pinpon.classList.add("d-none");
+    setTimeout(() => {
+        fireMovie.classList.add("d-none");
+    }, 8000);
+
+    setTimeout(() => {
+        fireImg.style.left = kuma.style.left;
+        fireImg.classList.remove("d-none");
+        fireImg.classList.add("smash");
+        fireKuma.style.left = kuma.style.left;
+        fireKuma.style.top = kuma.style.top;
+        fadeinImg(fireKuma, kuma);
+        fadeinImg(backFire, back);
+        fadeinImg(eneFire, eneImg);
+        fadeinImg(fireRight, eneImg);
+        fadeinImg(fireLeft, eneImg);
+    }, 9000);
+    setTimeout(() => {
+        fire.textContent = "";
+        fireImg.classList.add("d-none");
+        fireImg.classList.remove("smash");
+    }, 10000);
+    gage = 0;
+    updateGauge();
+    score += 1;
+    result.textContent = score + "点";
+}
+
+function fadeinImg(object, deleteObject) {
+    deleteObject.classList.add("d-none");
+    object.classList.remove("d-none");
+    object.classList.add("fadein");
+}
+

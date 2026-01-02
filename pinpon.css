@@ -49,13 +49,39 @@
 }
 
 @keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
+    0% {
+        opacity: 0;
+    }
 
-  100% {
-    opacity: 1;
-  }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* 必殺技ゲージのコンテナ */
+#gauge-container {
+    width: 400px;
+    height: 20px;
+    background: var(--gauge-bg);
+    border-radius: 10px;
+    margin-top: 20px;
+    position: relative;
+    border: 2px solid black;
+}
+
+/* ゲージの中身 */
+#gauge-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%);
+    border-radius: 8px;
+    transition:å width 0.3s;
+}
+
+/* 満タン時のアニメーション */
+.full-gauge {
+    animation: pulse 0.5s infinite alternate;
+    box-shadow: 0 0 15px #4facfe;
 }
 
 .fadein {
@@ -136,7 +162,19 @@
     height: 100px;
     position: absolute;
     top: 15px;
+    z-index: 10;
+    left: 400px;
 }
+
+.ene-point {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 15px;
+    left: 900px;
+    z-index: 10;
+}
+
 .start-btn {
     margin-left: 25px;
     margin-top: 10px;
@@ -153,6 +191,7 @@
     left: 440px;
     z-index: 20;
 }
+
 .fire-movie {
     position: absolute;
     width: 100%;
@@ -167,6 +206,7 @@
     position: absolute;
     z-index: 15;
 }
+
 .ene-fire {
     width: 150px;
     height: 150px;
@@ -183,10 +223,27 @@
     width: 200px;
     height: 200px;
 }
+
 .fire-left {
     position: absolute;
     left: 25px;
     top: 300px;
     width: 200px;
     height: 200px;
+}
+
+.gauge-container {
+    position: absolute;
+    top: 650px;
+    left: 300px;
+}
+
+.message {
+    position: absolute;
+    top: 450px;
+    left: 350px;
+    font-size: 24px;
+    color: red;
+    font-weight: bold;
+    background: white;
 }
