@@ -40,16 +40,17 @@ function game() {
     kuma.style.left = kumaX + "px";
     kumId = setInterval(kumaCatch, 50);
     eneId = setInterval(enePlayer, 80);
-    window.addEventListener("mousemove", (e) => {
-        if (e.clientX < 25) {
-            basketX = 25;
-        } else if (e.clientX > 950) {
-            basketX = 950;
-        } else {
-            basketX = e.clientX;
-        }
-    });
 };
+
+window.addEventListener("mousemove", (e) => {
+    if (e.clientX < 25) {
+        basketX = 25;
+    } else if (e.clientX > 950) {
+        basketX = 950;
+    } else {
+        basketX = e.clientX;
+    }
+});
 
 function cogumaRakka() {
     let leftX = 100 + Math.random() * 850;
@@ -98,8 +99,7 @@ function updateGauge() {
         gage = 100;
     }
     gageFill.style.width = gage + '%';
-    console.log(gage);
-    console.log(gageFill);
+
     if (gage >= 100) {
         gageFill.classList.add('full-gauge');
         message.style.display = 'block';
@@ -153,4 +153,30 @@ function fadeinImg(object, deleteObject) {
     object.classList.remove("d-none");
     object.classList.add("fadein");
 }
+// ボールの動き（参考）
+// let x = back.width / 2;
+// let y = back.height - 30;
+// let dx = 2;
+// let dy = -5;
+
+// function drawBall() {
+//     pinpon.style.left = x + "px";
+//     pinpon.style.top = y + "px";
+// }
+
+// function moveBall() {
+//     drawBall();
+
+//     if (x + dx > back.width - 25 || x + dx < 25) {
+//         dx = -dx;
+//     }
+//     if (y + dy > back.height - 25 || y + dy < 25) {
+//         dy = -dy;
+//     }
+
+//     x += dx;
+//     y += dy;
+// }
+
+// setInterval(moveBall, 5);
 
