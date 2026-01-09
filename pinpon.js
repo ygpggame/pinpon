@@ -1,13 +1,15 @@
 let score = 0;  // 自分のスコア
 let eneScore = 0;  // 敵のスコア
 let kumaX = 950;  // カゴX座標
-let cogumaId = 0;  // タイマーID
+let moveId = 0;  // タイマーID
 let kumId = 0;  // タイマーID
 let basketX = 950;  // カゴX座標
 let eneBasketX = 0;  // 敵カゴX座標
 let eneId = 0;  // タイマーID
+let pointId = 0;  // タイマーID
 let kuma = document.getElementById("js-kuma");
 let pinpon = document.getElementById("js-pinpon");
+let pinpon2 = document.getElementById("js-pinpon2");
 const startButton = document.getElementById("js-start");
 const result = document.getElementById("js-result");
 let ene = document.getElementById("js-ene");
@@ -23,10 +25,19 @@ const backFire = document.getElementById("js-back-fire");
 const fireRight = document.getElementById("js-fire-right");
 const fireLeft = document.getElementById("js-fire-left");
 let tp = 0;
-let maxGage = 10;
+let maxGage = 10;  // 必要なTP数
 let gage = 0;
 const gageFill = document.getElementById('gauge-fill');
 const message = document.getElementById('js-message');
+
+// ボールの動き（参考）
+let x = back.width / 2;
+let y = back.height - 30;
+let dx = 1;
+let dy = -5;
+let bai = false;
+let leftX = 0;
+let yX = 0;
 
 startButton.addEventListener("click", (e) => {
     game();
@@ -35,11 +46,12 @@ startButton.addEventListener("click", (e) => {
 function game() {
     score = 0;  // スコア
     kuma.classList.remove("d-none");
-    cogumaId = setInterval(cogumaRakka, 2300);
+    moveId = setInterval(moveBall, 5);
     kuma.style.top = 640 + "px";
     kuma.style.left = kumaX + "px";
     kumId = setInterval(kumaCatch, 50);
-    eneId = setInterval(enePlayer, 80);
+    eneId = setInterval(enePlayer, 20);
+    pointId = setInterval(pointPlus, 60);
 };
 
 window.addEventListener("mousemove", (e) => {
@@ -52,45 +64,13 @@ window.addEventListener("mousemove", (e) => {
     }
 });
 
-function cogumaRakka() {
-    let leftX = 100 + Math.random() * 850;
-    pinpon.style.left = leftX + "px";
-    pinpon.style.top = 40 + "px";
-    pinpon.classList.remove("d-none");
-    pinpon.classList.add("rakka");
-    setTimeout(() => {
-        pinpon.classList.remove("rakka");
-        pinpon.classList.add("up");
-        if (Math.abs(leftX - basketX) < 100) {
-            tp += 1;
-            gage += 100 / maxGage;
-            updateGauge();
-        } else {
-            eneScore += 1;
-            ene.textContent = eneScore + "点";
-            clearInterval(cogumaId);
-        }
-    }, 1000);
-    setTimeout(() => {
-        pinpon.classList.remove("up");
-        pinpon.classList.add("d-none");
-        if (Math.abs(leftX - eneBasketX) < 100) {
-
-        } else {
-            score += 1;
-            result.textContent = score + "点";
-            clearInterval(cogumaId);
-        }
-    }, 2000);
-    result.textContent = score + "点";
-}
 function kumaCatch() {
     kuma.style.left = basketX + "px"
     kuma.style.top = 640 + "px";
 }
 
 function enePlayer() {
-    eneBasketX = pinpon.style.left.replace("px", "");
+    eneBasketX = pinpon2.style.left.replace("px", "");
     eneImg.style.left = eneBasketX + "px";
 }
 
@@ -138,7 +118,6 @@ function fireSmash() {
         fadeinImg(fireLeft, eneImg);
     }, 9000);
     setTimeout(() => {
-        fire.textContent = "";
         fireImg.classList.add("d-none");
         fireImg.classList.remove("smash");
     }, 10000);
@@ -153,30 +132,62 @@ function fadeinImg(object, deleteObject) {
     object.classList.remove("d-none");
     object.classList.add("fadein");
 }
-// ボールの動き（参考）
-// let x = back.width / 2;
-// let y = back.height - 30;
-// let dx = 2;
-// let dy = -5;
 
-// function drawBall() {
-//     pinpon.style.left = x + "px";
-//     pinpon.style.top = y + "px";
-// }
 
-// function moveBall() {
-//     drawBall();
+function drawBall() {
+    pinpon2.style.left = x + "px";
+    pinpon2.style.top = y + "px";
+}
 
-//     if (x + dx > back.width - 25 || x + dx < 25) {
-//         dx = -dx;
-//     }
-//     if (y + dy > back.height - 25 || y + dy < 25) {
-//         dy = -dy;
-//     }
+function moveBall() {
+    let returnBall = y + dy > back.height - 30 || y + dy < 30;
+    drawBall();
+    bai = false;
 
-//     x += dx;
-//     y += dy;
-// }
+    if ((x + dx > back.width - 250 && returnBall) || ( x + dx < 250 && returnBall)) {
+        if (Math.abs(x - 300) > 100) {
+            dx = -dx;
+            bai=true;
+        } else {
+            dx = -dx;
+        }
+    }
+    if (returnBall) {
+        dy = -dy;
+    }
+    y += dy;
 
-// setInterval(moveBall, 5);
+    if (bai) {
+        x += 2  * dx;
+    } else {
+        x += dx;
+    }
+
+}
+
+function pointPlus() {
+    leftX= pinpon2.style.left.replace("px", "");
+    yX = pinpon2.style.top.replace("px", "");
+
+    console.log("leftX", leftX);
+    console.log("yX", yX);
+
+    if (yX > 645 && yX < 700) {
+        if (Math.abs(leftX - basketX) < 100) {
+
+        }
+        tp += 1;
+        gage += 100 / maxGage;
+        updateGauge();
+    } else if (yX > 645 && yX < 700) {
+        eneScore += 1;
+        ene.textContent = eneScore + "点";
+        clearInterval(moveId);
+        clearInterval(eneId);
+        clearInterval(pointId);
+    }
+}
+
+
+
 
