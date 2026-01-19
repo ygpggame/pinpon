@@ -8,7 +8,6 @@ let eneBasketX = 0;  // 敵カゴX座標
 let eneId = 0;  // タイマーID
 let pointId = 0;  // タイマーID
 let kuma = document.getElementById("js-kuma");
-let pinpon = document.getElementById("js-pinpon");
 let pinpon2 = document.getElementById("js-pinpon2");
 const startButton = document.getElementById("js-start");
 const result = document.getElementById("js-result");
@@ -46,6 +45,7 @@ startButton.addEventListener("click", (e) => {
 function game() {
     score = 0;  // スコア
     kuma.classList.remove("d-none");
+    pinpon2.classList.remove("d-none");
     moveId = setInterval(moveBall, 5);
     kuma.style.top = 640 + "px";
     kuma.style.left = kumaX + "px";
@@ -97,10 +97,16 @@ addEventListener("dblclick", (e) => {
 });
 
 function fireSmash() {
+    if (gage < 100) {
+        return;
+    }
+    clearInterval(moveId);
+    clearInterval(eneId);
+    clearInterval(pointId);
     fireMovie.classList.remove("d-none");
     fireMovie.currentTime = 0;
     fireMovie.play();
-    pinpon.classList.add("d-none");
+    pinpon2.classList.add("d-none");
     setTimeout(() => {
         fireMovie.classList.add("d-none");
     }, 8000);
@@ -158,7 +164,7 @@ function moveBall() {
     y += dy;
 
     if (bai) {
-        x += 2  * dx;
+        x += 2 * dx;
     } else {
         x += dx;
     }
@@ -169,25 +175,19 @@ function pointPlus() {
     leftX= pinpon2.style.left.replace("px", "");
     yX = pinpon2.style.top.replace("px", "");
 
-    console.log("leftX", leftX);
-    console.log("yX", yX);
-
     if (yX > 645 && yX < 700) {
         if (Math.abs(leftX - basketX) < 100) {
-
+            tp += 1;
+            gage += 100 / maxGage;
+            updateGauge();
+        } else  {
+            eneScore += 1;
+            ene.textContent = eneScore + "点";
+            clearInterval(moveId);
+            clearInterval(eneId);
+            clearInterval(pointId);
+            startButton.classList.remove("d-none");
+            alert("相手にポイントが入りました。");
         }
-        tp += 1;
-        gage += 100 / maxGage;
-        updateGauge();
-    } else if (yX > 645 && yX < 700) {
-        eneScore += 1;
-        ene.textContent = eneScore + "点";
-        clearInterval(moveId);
-        clearInterval(eneId);
-        clearInterval(pointId);
-    }
+    } 
 }
-
-
-
-
