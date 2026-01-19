@@ -37,6 +37,8 @@ let dy = -5;
 let bai = false;
 let leftX = 0;
 let yX = 0;
+let randId = 0;
+let ranNum = 1;
 
 startButton.addEventListener("click", (e) => {
     game();
@@ -47,11 +49,13 @@ function game() {
     kuma.classList.remove("d-none");
     pinpon2.classList.remove("d-none");
     moveId = setInterval(moveBall, 5);
+
     kuma.style.top = 640 + "px";
     kuma.style.left = kumaX + "px";
     kumId = setInterval(kumaCatch, 50);
     eneId = setInterval(enePlayer, 20);
     pointId = setInterval(pointPlus, 60);
+    randId = setInterval(randBall, 2000);
 };
 
 window.addEventListener("mousemove", (e) => {
@@ -150,6 +154,7 @@ function moveBall() {
     drawBall();
     bai = false;
 
+
     if ((x + dx > back.width - 250 && returnBall) || ( x + dx < 250 && returnBall)) {
         if (Math.abs(x - 300) > 100) {
             dx = -dx;
@@ -164,9 +169,9 @@ function moveBall() {
     y += dy;
 
     if (bai) {
-        x += 2 * dx;
+        x += ranNum * dx;
     } else {
-        x += dx;
+        x += ranNum * dx;
     }
 
 }
@@ -190,4 +195,8 @@ function pointPlus() {
             alert("相手にポイントが入りました。");
         }
     } 
+}
+
+function randBall() {
+   ranNum = Math.floor(Math.random() * 3);
 }
