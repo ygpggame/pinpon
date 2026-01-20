@@ -39,13 +39,14 @@ let leftX = 0;
 let yX = 0;
 let randId = 0;
 let ranNum = 1;
+let playFlag = false;
 
 startButton.addEventListener("click", (e) => {
     game();
     startButton.classList.add("d-none");
 });
 function game() {
-    score = 0;  // スコア
+    playFlag = true;
     kuma.classList.remove("d-none");
     pinpon2.classList.remove("d-none");
     moveId = setInterval(moveBall, 5);
@@ -86,22 +87,22 @@ function updateGauge() {
 
     if (gage >= 100) {
         gageFill.classList.add('full-gauge');
-        message.style.display = 'block';
+        message.classList.remove("d-none");
     } else {
         gageFill.classList.remove('full-gauge');
-        message.style.display = 'none';
+        message.classList.add("d-none");
     }
 }
 
 addEventListener("dblclick", (e) => {
-    if (gage < 100) {
+    if (gage < 100 || !playFlag) {
         return;
     }
     fireSmash();
 });
 
 function fireSmash() {
-    if (gage < 100) {
+    if (gage < 100 || !playFlag) {
         return;
     }
     clearInterval(moveId);
@@ -188,10 +189,7 @@ function pointPlus() {
         } else  {
             eneScore += 1;
             ene.textContent = eneScore + "点";
-            clearInterval(moveId);
-            clearInterval(eneId);
-            clearInterval(pointId);
-            startButton.classList.remove("d-none");
+            stopGame()
             alert("相手にポイントが入りました。");
         }
     } 
@@ -199,4 +197,27 @@ function pointPlus() {
 
 function randBall() {
    ranNum = Math.floor(Math.random() * 3);
+}
+
+function stopGame() {
+    clearInterval(moveId);
+    clearInterval(eneId);
+    clearInterval(pointId);
+    clearInterval(randId);
+    startButton.classList.remove("d-none");
+    
+    playFlag = false;
+    startButton.textContent = "再開する";
+    message.classList.add("d-none");
+    pinpon2.style.top = "10px";
+    x = back.width / 2;
+    y = back.height - 30;
+    dx = 1;
+    dy = -5;
+    bai = false;
+    leftX = 0;
+    yX = 0;
+    randId = 0;
+    ranNum = 1;
+    pinpon2.classList.add("d-none");
 }
