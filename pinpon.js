@@ -34,7 +34,6 @@ let x = back.width / 2;
 let y = back.height - 30;
 let dx = 1;
 let dy = -5;
-let bai = false;
 let leftX = 0;
 let yX = 0;
 let randId = 0;
@@ -56,7 +55,7 @@ function game() {
     kumId = setInterval(kumaCatch, 50);
     eneId = setInterval(enePlayer, 20);
     pointId = setInterval(pointPlus, 60);
-    randId = setInterval(randBall, 2000);
+    randId = setInterval(randBall, 1400);
 };
 
 window.addEventListener("mousemove", (e) => {
@@ -118,8 +117,6 @@ function fireSmash() {
 
     setTimeout(() => {
         fireImg.style.left = kuma.style.left;
-        fireImg.classList.remove("d-none");
-        fireImg.classList.add("smash");
         fireKuma.style.left = kuma.style.left;
         fireKuma.style.top = kuma.style.top;
         fadeinImg(fireKuma, kuma);
@@ -129,13 +126,23 @@ function fireSmash() {
         fadeinImg(fireLeft, eneImg);
     }, 9000);
     setTimeout(() => {
+        fireImg.classList.remove("d-none");
+        fireImg.classList.add("smash");
+    },11000)
+    setTimeout(() => {
         fireImg.classList.add("d-none");
         fireImg.classList.remove("smash");
-    }, 10000);
+        
+    }, 12000);
+    setTimeout(() => {
+        stopGame();
+        alert("自分に得点が入りました！！");
+    }, 13500);
     gage = 0;
     updateGauge();
     score += 1;
     result.textContent = score + "点";
+
 }
 
 function fadeinImg(object, deleteObject) {
@@ -153,28 +160,15 @@ function drawBall() {
 function moveBall() {
     let returnBall = y + dy > back.height - 30 || y + dy < 30;
     drawBall();
-    bai = false;
-
 
     if ((x + dx > back.width - 250 && returnBall) || ( x + dx < 250 && returnBall)) {
-        if (Math.abs(x - 300) > 100) {
-            dx = -dx;
-            bai=true;
-        } else {
-            dx = -dx;
-        }
+        dx = -dx;
     }
     if (returnBall) {
         dy = -dy;
     }
     y += dy;
-
-    if (bai) {
-        x += ranNum * dx;
-    } else {
-        x += ranNum * dx;
-    }
-
+    x += ranNum * dx;
 }
 
 function pointPlus() {
@@ -189,7 +183,7 @@ function pointPlus() {
         } else  {
             eneScore += 1;
             ene.textContent = eneScore + "点";
-            stopGame()
+            stopGame();
             alert("相手にポイントが入りました。");
         }
     } 
@@ -204,12 +198,11 @@ function stopGame() {
     clearInterval(eneId);
     clearInterval(pointId);
     clearInterval(randId);
+    startButton.textContent = "再開する";
     startButton.classList.remove("d-none");
     
     playFlag = false;
-    startButton.textContent = "再開する";
     message.classList.add("d-none");
-    pinpon2.style.top = "10px";
     x = back.width / 2;
     y = back.height - 30;
     dx = 1;
