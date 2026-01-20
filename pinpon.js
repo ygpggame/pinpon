@@ -136,7 +136,6 @@ function fireSmash() {
     setTimeout(() => {
         fireImg.classList.add("d-none");
         fireImg.classList.remove("smash");
-        
     }, 12000);
     setTimeout(() => {
         stopGame();
