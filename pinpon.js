@@ -41,7 +41,7 @@ let ranNum = 1;
 let playFlag = false;
 let eneReturn = 5;
 let eneCount = 0;
-let eneCountMax = 30;
+let eneReturnMax = 35;
 
 startButton.addEventListener("click", (e) => {
     game();
@@ -49,7 +49,7 @@ startButton.addEventListener("click", (e) => {
 });
 function game() {
     playFlag = true;
-    eneReturn = Math.floor(Math.random() * eneCountMax) + eneReturn;
+    eneReturn = Math.floor(Math.random() * (eneReturnMax - eneReturn)) + eneReturn;
     kuma.classList.remove("d-none");
     pinpon2.classList.remove("d-none");
     moveId = setInterval(moveBall, 5);
