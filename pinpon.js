@@ -34,11 +34,14 @@ let x = back.width / 2;
 let y = back.height - 30;
 let dx = 1;
 let dy = -5;
-let leftX = 0;
+let pinponX = 0;
 let yX = 0;
 let randId = 0;
 let ranNum = 1;
 let playFlag = false;
+let eneReturn = 5;
+let eneCount = 0;
+let eneCountMax = 30;
 
 startButton.addEventListener("click", (e) => {
     game();
@@ -46,6 +49,7 @@ startButton.addEventListener("click", (e) => {
 });
 function game() {
     playFlag = true;
+    eneReturn = Math.floor(Math.random() * eneCountMax) + eneReturn;
     kuma.classList.remove("d-none");
     pinpon2.classList.remove("d-none");
     moveId = setInterval(moveBall, 5);
@@ -142,7 +146,6 @@ function fireSmash() {
     updateGauge();
     score += 1;
     result.textContent = score + "点";
-
 }
 
 function fadeinImg(object, deleteObject) {
@@ -166,17 +169,21 @@ function moveBall() {
     }
     if (returnBall) {
         dy = -dy;
+        eneCount += 1;
+        if (eneCount >= eneReturn) {
+            clearInterval(eneId);
+        }
     }
     y += dy;
     x += ranNum * dx;
 }
 
 function pointPlus() {
-    leftX= pinpon2.style.left.replace("px", "");
+    pinponX = pinpon2.style.left.replace("px", "");
     yX = pinpon2.style.top.replace("px", "");
 
     if (yX > 645 && yX < 700) {
-        if (Math.abs(leftX - basketX) < 100) {
+        if (Math.abs(pinponX - basketX) < 100) {
             tp += 1;
             gage += 100 / maxGage;
             updateGauge();
@@ -186,7 +193,14 @@ function pointPlus() {
             stopGame();
             alert("相手にポイントが入りました。");
         }
-    } 
+    } else if (yX < 70) {
+        if (Math.abs(pinponX - eneBasketX) > 100) {
+            score += 1;
+            result.textContent = score + "点";
+            stopGame();
+            alert("自分にポイントが入りました。");
+        }
+    }
 }
 
 function randBall() {
@@ -208,9 +222,11 @@ function stopGame() {
     dx = 1;
     dy = -5;
     bai = false;
-    leftX = 0;
+    pinponX = 0;
     yX = 0;
     randId = 0;
     ranNum = 1;
     pinpon2.classList.add("d-none");
+    eneReturn= 5;
+    eneCount=0;
 }
