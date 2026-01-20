@@ -43,6 +43,11 @@ let eneReturn = 5;
 let eneCount = 0;
 let eneReturnMax = 35;
 
+const winArea = document.getElementById("js-win");
+const loseArea = document.getElementById("js-lose");
+let winPoint = 5; // 勝利条件点数
+let restartButtons = document.getElementsByClassName("js-restart");
+
 startButton.addEventListener("click", (e) => {
     game();
     startButton.classList.add("d-none");
@@ -140,6 +145,7 @@ function fireSmash() {
     setTimeout(() => {
         stopGame();
         alert("自分に得点が入りました！！");
+        WinLose ();
     }, 13500);
     gage = 0;
     updateGauge();
@@ -191,6 +197,7 @@ function pointPlus() {
             ene.textContent = eneScore + "点";
             stopGame();
             alert("相手にポイントが入りました。");
+            WinLose ();
         }
     } else if (yX < 70) {
         if (Math.abs(pinponX - eneBasketX) > 100) {
@@ -198,6 +205,7 @@ function pointPlus() {
             result.textContent = score + "点";
             stopGame();
             alert("自分にポイントが入りました。");
+            WinLose ();
         }
     }
 }
@@ -229,3 +237,19 @@ function stopGame() {
     eneReturn= 5;
     eneCount=0;
 }
+
+restartButtons = Array.from(restartButtons);
+restartButtons.forEach((button) => {
+    button.addEventListener("click", () => {        
+        location.reload();
+    });
+});
+
+function WinLose () {
+    if (score >= winPoint) {
+        winArea.classList.remove("d-none");
+    } else if (eneScore >= winPoint) {
+        loseArea.classList.remove("d-none");
+    }
+}
+
