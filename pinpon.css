@@ -59,7 +59,7 @@
 }
 
 /* 必殺技ゲージのコンテナ */
-#gauge-container {
+.gauge-container {
     width: 400px;
     height: 20px;
     background: var(--gauge-bg);
@@ -70,7 +70,7 @@
 }
 
 /* ゲージの中身 */
-#gauge-fill {
+.gauge-fill {
     width: 0%;
     height: 100%;
     background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%);
@@ -161,7 +161,7 @@
     width: 100px;
     height: 100px;
     position: absolute;
-    top: 15px;
+    top: 25px;
     z-index: 10;
     left: 400px;
 }
@@ -234,7 +234,7 @@
 
 .gauge-container {
     position: absolute;
-    top: 650px;
+    top: 700px;
     left: 300px;
 }
 
@@ -264,4 +264,9 @@
     width: 200px;
     height: 200px;
     margin-top: 10px;
+}
+
+.ene-gauge-container {
+    top: 0px;
+    left: 300px;
 }

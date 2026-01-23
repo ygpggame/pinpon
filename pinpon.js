@@ -23,11 +23,22 @@ const back = document.getElementById("js-back");
 const backFire = document.getElementById("js-back-fire");
 const fireRight = document.getElementById("js-fire-right");
 const fireLeft = document.getElementById("js-fire-left");
+
+let iceMovie = document.getElementById("js-ice-movie");
+let iceBack = document.getElementById("js-ice-back");
+let iceKuma = document.getElementById("js-ice-kuma");
+
 let tp = 0;
 let maxGage = 10;  // 必要なTP数
 let gage = 0;
 const gageFill = document.getElementById('gauge-fill');
 const message = document.getElementById('js-message');
+
+let eneTp = 0;
+let maxEneGage = 20;  // 必要なTP数
+let eneGage = 0;
+let eneGageFill = document.getElementById('ene-gauge-fill');
+let eneGageContainer = document.getElementById('ene-gauge-container');
 
 // ボールの動き（参考）
 let x = back.width / 2;
@@ -59,7 +70,7 @@ function game() {
     pinpon2.classList.remove("d-none");
     moveId = setInterval(moveBall, 5);
 
-    kuma.style.top = 640 + "px";
+    kuma.style.top = 620 + "px";
     kuma.style.left = kumaX + "px";
     kumId = setInterval(kumaCatch, 50);
     eneId = setInterval(enePlayer, 20);
@@ -79,7 +90,7 @@ window.addEventListener("mousemove", (e) => {
 
 function kumaCatch() {
     kuma.style.left = basketX + "px"
-    kuma.style.top = 640 + "px";
+    kuma.style.top = 620 + "px";
 }
 
 function enePlayer() {
@@ -102,11 +113,28 @@ function updateGauge() {
     }
 }
 
+function updateEneGauge() {
+    if (eneGage > 100) {
+        eneGage = 100;
+    }
+    eneGageFill.style.width = eneGage + '%';
+
+    if (eneGage >= 100) {
+        eneGageFill.classList.add('full-gauge');
+        message.textContent = "相手の必殺技ゲージがMAXになりました！";
+        message.classList.remove("d-none");
+    } else {
+        eneGageFill.classList.remove('full-gauge');
+        //message.classList.add("d-none");
+    }
+}
+
 addEventListener("dblclick", (e) => {
     if (gage < 100 || !playFlag) {
         return;
     }
     fireSmash();
+    //iceDrive();
 });
 
 function fireSmash() {
@@ -145,12 +173,41 @@ function fireSmash() {
     setTimeout(() => {
         stopGame();
         alert("自分に得点が入りました！！");
-        WinLose ();
+        WinLose();
     }, 13500);
     gage = 0;
     updateGauge();
     score += 1;
     result.textContent = score + "点";
+}
+
+function iceDrive() {
+    if (gage < 100 || !playFlag) {
+        return;
+    }
+    clearInterval(moveId);
+    clearInterval(eneId);
+    clearInterval(pointId);
+    iceMovie.classList.remove("d-none");
+    iceMovie.currentTime = 0;
+    iceMovie.play();
+    pinpon2.classList.add("d-none");
+    setTimeout(() => {
+        iceMovie.classList.add("d-none");
+        iceKuma.style.left = kuma.style.left;
+        iceKuma.style.top = kuma.style.top;
+        fadeinImg(iceKuma, kuma);
+        fadeinImg(iceBack, back);
+    }, 8000);
+    setTimeout(() => {
+        pinpon2.style.top = "40px";
+        pinpon2.classList.remove("d-none");
+        pinpon2.classList.add("rakka");
+    }, 9000);
+    setTimeout(() => {
+        pinpon2.classList.add("d-none");
+        pinpon2.classList.remove("rakka");
+    }, 10000);
 }
 
 function fadeinImg(object, deleteObject) {
@@ -166,7 +223,7 @@ function drawBall() {
 }
 
 function moveBall() {
-    let returnBall = y + dy > back.height - 30 || y + dy < 30;
+    let returnBall = y + dy > back.height - 20 || y + dy < 20;
     drawBall();
 
     if ((x + dx > back.width - 250 && returnBall) || ( x + dx < 250 && returnBall)) {
@@ -187,7 +244,7 @@ function pointPlus() {
     pinponX = pinpon2.style.left.replace("px", "");
     yX = pinpon2.style.top.replace("px", "");
 
-    if (yX > 645 && yX < 700) {
+    if (yX > 640 && yX < 700) {
         if (Math.abs(pinponX - basketX) < 100) {
             tp += 1;
             gage += 100 / maxGage;
@@ -197,7 +254,7 @@ function pointPlus() {
             ene.textContent = eneScore + "点";
             stopGame();
             alert("相手にポイントが入りました。");
-            WinLose ();
+            WinLose();
         }
     } else if (yX < 70) {
         if (Math.abs(pinponX - eneBasketX) > 100) {
@@ -205,7 +262,11 @@ function pointPlus() {
             result.textContent = score + "点";
             stopGame();
             alert("自分にポイントが入りました。");
-            WinLose ();
+            WinLose();
+        } else {
+            eneTp += 1;
+            eneGage += 100 / maxEneGage;
+            updateEneGauge();
         }
     }
 }
@@ -245,7 +306,7 @@ restartButtons.forEach((button) => {
     });
 });
 
-function WinLose () {
+function WinLose() {
     if (score >= winPoint) {
         winArea.classList.remove("d-none");
     } else if (eneScore >= winPoint) {
