@@ -241,11 +241,12 @@
 .message {
     position: absolute;
     top: 450px;
-    left: 350px;
+    left: 280px;
     font-size: 24px;
     color: red;
     font-weight: bold;
     background: white;
+    text-align: center;
 }
 
 .winloose {

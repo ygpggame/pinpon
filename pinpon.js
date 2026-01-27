@@ -60,6 +60,7 @@ let winPoint = 5; // 勝利条件点数
 let restartButtons = document.getElementsByClassName("js-restart");
 
 startButton.addEventListener("click", (e) => {
+    resetImg();
     game();
     startButton.classList.add("d-none");
 });
@@ -119,7 +120,9 @@ function updateEneGauge() {
     }
     eneGageFill.style.width = eneGage + '%';
 
-    if (eneGage >= 100) {
+    if (eneGage >= 100 && gage >= 100) {
+        message.innerHTML = "相手と自分の必殺技ゲージがMAXになりました！<br>ダブルクリックで必殺技！！";
+    } else if (eneGage >= 100) {
         eneGageFill.classList.add('full-gauge');
         message.textContent = "相手の必殺技ゲージがMAXになりました！";
         message.classList.remove("d-none");
@@ -314,3 +317,18 @@ function WinLose() {
     }
 }
 
+function resetImg() {
+    iceKuma.classList.add("d-none");
+    iceBack.classList.add("d-none");
+    fireKuma.classList.add("d-none");
+    backFire.classList.add("d-none");
+    eneFire.classList.add("d-none");
+    fireRight.classList.add("d-none");
+    fireLeft.classList.add("d-none");
+    kuma.classList.remove("d-none");
+    back.classList.remove("d-none");
+    eneImg.classList.remove("d-none");
+    pinpon2.classList.remove("d-none");
+    x = back.width / 2;
+    y = back.height - 30;
+}
