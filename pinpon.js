@@ -53,6 +53,7 @@ let playFlag = false;
 let eneReturn = 5;
 let eneCount = 0;
 let eneReturnMax = 35;
+let eneIcePer = 8;
 
 const winArea = document.getElementById("js-win");
 const loseArea = document.getElementById("js-lose");
@@ -128,7 +129,12 @@ function updateEneGauge() {
         message.classList.remove("d-none");
     } else {
         eneGageFill.classList.remove('full-gauge');
-        //message.classList.add("d-none");
+    }
+    if (eneGage >= 100) {
+        let eneRan = Math.floor(Math.random() * 10);
+        if (eneRan >= eneIcePer) {
+            iceDrive();
+        }
     }
 }
 
@@ -137,7 +143,6 @@ addEventListener("dblclick", (e) => {
         return;
     }
     fireSmash();
-    //iceDrive();
 });
 
 function fireSmash() {
@@ -195,6 +200,9 @@ function iceDrive() {
     iceMovie.currentTime = 0;
     iceMovie.play();
     pinpon2.classList.add("d-none");
+    message.classList.add("d-none");
+    eneGage = 0;
+    updateEneGauge();
     setTimeout(() => {
         iceMovie.classList.add("d-none");
         iceKuma.style.left = kuma.style.left;
@@ -211,6 +219,10 @@ function iceDrive() {
         pinpon2.classList.add("d-none");
         pinpon2.classList.remove("rakka");
     }, 10000);
+    stopGame();
+    alert("相手に得点が入りました！！");
+    eneScore += 1;
+    ene.textContent = eneScore + "点";
 }
 
 function fadeinImg(object, deleteObject) {
@@ -298,7 +310,7 @@ function stopGame() {
     randId = 0;
     ranNum = 1;
     pinpon2.classList.add("d-none");
-    eneReturn= 5;
+    eneReturn = 5;
     eneCount=0;
 }
 
