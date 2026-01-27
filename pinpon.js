@@ -122,7 +122,7 @@ function updateEneGauge() {
     eneGageFill.style.width = eneGage + '%';
 
     if (eneGage >= 100 && gage >= 100) {
-        message.innerHTML = "相手と自分の必殺技ゲージがMAXになりました！<br>ダブルクリックで必殺技！！";
+        message.textContent = "相手と自分の必殺技ゲージがMAXになりました！\n ダブルクリックで必殺技！！";
     } else if (eneGage >= 100) {
         eneGageFill.classList.add('full-gauge');
         message.textContent = "相手の必殺技ゲージがMAXになりました！";
@@ -218,11 +218,11 @@ function iceDrive() {
     setTimeout(() => {
         pinpon2.classList.add("d-none");
         pinpon2.classList.remove("rakka");
+        alert("相手に得点が入りました！！");
+        eneScore += 1;
+        ene.textContent = eneScore + "点";
+        stopGame();
     }, 10000);
-    stopGame();
-    alert("相手に得点が入りました！！");
-    eneScore += 1;
-    ene.textContent = eneScore + "点";
 }
 
 function fadeinImg(object, deleteObject) {
