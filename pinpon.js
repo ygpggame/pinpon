@@ -1,3 +1,8 @@
+let myCaracters = {0:"kuma", 1:"akira", 2:"inazuma"}; // 自分のキャラクター一覧
+let enemyCaracters = {0:"ice", 1:"kami", 2:"akuma"}; // 敵キャラクター一覧
+let myCara = "kuma";  // キャラクター選択
+let eneCara = "ice";  // 敵キャラクター選択
+
 let score = 0;  // 自分のスコア
 let eneScore = 0;  // 敵のスコア
 let kumaX = 950;  // カゴX座標
@@ -12,7 +17,7 @@ let pinpon2 = document.getElementById("js-pinpon2");
 const startButton = document.getElementById("js-start");
 const result = document.getElementById("js-result");
 let ene = document.getElementById("js-ene");
-let eneImg = document.getElementById("js-ene-img");
+//let eneImg = document.getElementById("js-ene-img");
 const eneFire = document.getElementById("js-ene-fire");
 const left = document.getElementById("left");
 const right = document.getElementById("right");
@@ -31,6 +36,7 @@ let iceKuma = document.getElementById("js-ice-kuma");
 let tp = 0;
 let maxGage = 10;  // 必要なTP数
 let gage = 0;
+let ballRandomMax = 3;
 const gageFill = document.getElementById('gauge-fill');
 const message = document.getElementById('js-message');
 
@@ -39,6 +45,8 @@ let maxEneGage = 20;  // 必要なTP数
 let eneGage = 0;
 let eneGageFill = document.getElementById('ene-gauge-fill');
 let eneGageContainer = document.getElementById('ene-gauge-container');
+
+eneImg = document.getElementById("js-god-img");
 
 // ボールの動き（参考）
 let x = back.width / 2;
@@ -287,7 +295,7 @@ function pointPlus() {
 }
 
 function randBall() {
-   ranNum = Math.floor(Math.random() * 3);
+   ranNum = Math.floor(Math.random() * ballRandomMax);
 }
 
 function stopGame() {
@@ -343,4 +351,16 @@ function resetImg() {
     pinpon2.classList.remove("d-none");
     x = back.width / 2;
     y = back.height - 30;
+}
+
+function godDrive() {
+    if (eneGage < 100 || !playFlag) {
+        return;
+    }  
+}
+
+function inazumaBrust() {
+    if (gage < 100 || !playFlag) {
+        return;
+    }
 }
