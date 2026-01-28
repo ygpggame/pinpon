@@ -10,8 +10,8 @@ let enemyCaracters = {
     1: "kami", 
     2:"akuma"
 };
-let myCara = myCaracters[ 0 ];  // キャラクター選択
-let eneCara = enemyCaracters[ 1 ];  // 敵キャラクター選択
+let myCara = myCaracters[0];  // キャラクター選択
+let eneCara = enemyCaracters[0];  // 敵キャラクター選択
 
 let hissatuFlag = true;  // 必殺技使用フラグ
 
