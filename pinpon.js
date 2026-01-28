@@ -1,7 +1,19 @@
-let myCaracters = {0:"kuma", 1:"akira", 2:"inazuma"}; // 自分のキャラクター一覧
-let enemyCaracters = {0:"ice", 1:"kami", 2:"akuma"}; // 敵キャラクター一覧
-let myCara = "kuma";  // キャラクター選択
-let eneCara = "ice";  // 敵キャラクター選択
+// 自分のキャラクター一覧
+let myCaracters = {
+    0:"kuma", 
+    1:"akira", 
+    2:"inazuma"
+}; 
+// 敵キャラクター一覧
+let enemyCaracters = {
+    0: "ice", 
+    1: "kami", 
+    2:"akuma"
+};
+let myCara = myCaracters[ 0 ];  // キャラクター選択
+let eneCara = enemyCaracters[ 1 ];  // 敵キャラクター選択
+
+let hissatuFlag = true;  // 必殺技使用フラグ
 
 let score = 0;  // 自分のスコア
 let eneScore = 0;  // 敵のスコア
@@ -17,7 +29,10 @@ let pinpon2 = document.getElementById("js-pinpon2");
 const startButton = document.getElementById("js-start");
 const result = document.getElementById("js-result");
 let ene = document.getElementById("js-ene");
-//let eneImg = document.getElementById("js-ene-img");
+let eneImg = document.getElementById("js-ene-img");
+if (eneCara === "kami") {
+    eneImg = document.getElementById("js-god-img");
+}
 const eneFire = document.getElementById("js-ene-fire");
 const left = document.getElementById("left");
 const right = document.getElementById("right");
@@ -46,7 +61,8 @@ let eneGage = 0;
 let eneGageFill = document.getElementById('ene-gauge-fill');
 let eneGageContainer = document.getElementById('ene-gauge-container');
 
-eneImg = document.getElementById("js-god-img");
+let godMovie = document.getElementById("js-god-movie");
+let godBack = document.getElementById("js-god-back");
 
 // ボールの動き（参考）
 let x = back.width / 2;
@@ -140,14 +156,18 @@ function updateEneGauge() {
     }
     if (eneGage >= 100) {
         let eneRan = Math.floor(Math.random() * 10);
-        if (eneRan >= eneIcePer) {
-            iceDrive();
+        if (eneRan >= eneIcePer && hissatuFlag) {
+            if (eneCara === "ice") {
+                iceDrive();
+            } else if (eneCara === "kami") {
+                godDrive();
+            }
         }
     }
 }
 
 addEventListener("dblclick", (e) => {
-    if (gage < 100 || !playFlag) {
+    if ((gage < 100 || !playFlag) && hissatuFlag ) {
         return;
     }
     fireSmash();
@@ -305,7 +325,9 @@ function stopGame() {
     clearInterval(randId);
     startButton.textContent = "再開する";
     startButton.classList.remove("d-none");
-    
+    godBack.classList.add("d-none");
+    fireBack.classList.add("d-none");
+
     playFlag = false;
     message.classList.add("d-none");
     x = back.width / 2;
@@ -356,7 +378,39 @@ function resetImg() {
 function godDrive() {
     if (eneGage < 100 || !playFlag) {
         return;
-    }  
+    }
+    clearInterval(moveId);
+    clearInterval(eneId);
+    clearInterval(pointId);
+    godMovie.classList.remove("d-none");
+    godMovie.currentTime = 0;
+    godMovie.play();
+    pinpon2.classList.add("d-none");
+    message.classList.add("d-none");
+    eneGage = 0;
+    updateEneGauge();
+    setTimeout(() => {
+        godMovie.classList.add("d-none");
+    }, 8000);
+    setTimeout(() => {
+        godBack.classList.remove("d-none");
+    }, 9000);
+    setTimeout(() => {
+        pinpon2.style.top = "40px";
+        pinpon2.classList.remove("d-none");
+        pinpon2.classList.add("big-ball")
+        pinpon2.classList.add("rakka");
+    }, 10000);
+    setTimeout(() => {
+        pinpon2.classList.add("d-none");
+        pinpon2.classList.remove("rakka");
+        pinpon2.classList.remove("big-ball");
+        
+        alert("相手に得点が入りました！！");
+        eneScore += 1;
+        ene.textContent = eneScore + "点";
+        stopGame();
+    }, 11000);
 }
 
 function inazumaBrust() {
