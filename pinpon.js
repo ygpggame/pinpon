@@ -29,6 +29,8 @@ let pointId = 0;  // タイマーID
 let kuma = document.getElementById("js-kuma");
 // ボールの要素の取得
 let pinpon2 = document.getElementById("js-pinpon2");
+// 背景要素の取得
+const back = document.getElementById("js-back");
 // スタートのボタン要素の取得
 const startButton = document.getElementById("js-start");
 // 得点表示要素の取得
@@ -42,34 +44,33 @@ if (eneCara === "kami") {
 }
 
 // 敵必殺技炎で使うの要素の取得
-const eneFire = document.getElementById("js-ene-fire");
-const left = document.getElementById("left");
-const right = document.getElementById("right");
-const fireImg = document.getElementById("js-fire-img");
 let fireMovie = document.getElementById("fire-movie");
-let iceMovie = document.getElementById("js-ice-movie"); 
+const eneFire = document.getElementById("js-ene-fire");
+const fireImg = document.getElementById("js-fire-img");
 let fireKuma = document.getElementById("js-kuma-fire");
-const back = document.getElementById("js-back");
 const backFire = document.getElementById("js-back-fire");
 const fireRight = document.getElementById("js-fire-right");
 const fireLeft = document.getElementById("js-fire-left");
-
+// 氷の必殺技で使う要素の取得
+let iceMovie = document.getElementById("js-ice-movie"); 
 let iceBack = document.getElementById("js-ice-back");
 let iceKuma = document.getElementById("js-ice-kuma");
 
-let tp = 0;
-let maxGage = 10;  // 必要なTP数
-let gage = 0;
+let tp = 0; // 自分のTP数
+let maxGage = 10; // 必要なTP数
+let gage = 0;// 必殺技ゲージ
 let ballRandomMax = 3;
 const gageFill = document.getElementById('gauge-fill');
 const message = document.getElementById('js-message');
 
-let eneTp = 0;
+let eneTp = 0;// 敵のTP数
 let maxEneGage = 20;  // 必要なTP数
-let eneGage = 0;
+let eneGage = 0; // 敵必殺技ゲージ
+// 敵必殺技ゲージ要素の取得
 let eneGageFill = document.getElementById('ene-gauge-fill');
+// 敵必殺技ゲージ枠の要素の取得
 let eneGageContainer = document.getElementById('ene-gauge-container');
-
+// 羽の必殺技で使う要素の取得
 let godMovie = document.getElementById("js-god-movie");
 let godBack = document.getElementById("js-god-back");
 
@@ -86,7 +87,7 @@ let playFlag = false;
 let eneReturn = 5;
 let eneCount = 0;
 let eneReturnMax = 35;
-let eneIcePer = 8;
+let eneIcePer = 8; // 敵氷必殺技発動確率（0〜10の数字で設定、数字が少ないほど発動しやすい）
 
 const winArea = document.getElementById("js-win");
 const loseArea = document.getElementById("js-lose");
