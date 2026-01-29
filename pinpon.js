@@ -14,7 +14,7 @@ let enemyCaracters = {
 };
 // 体験２　キャラクター選択する。数字を変えるとキャラクターが変わる。
 let myCara = myCaracters[ 0 ];  // 自分のキャラクター選択
-let eneCara = enemyCaracters[ 1 ];  // 敵キャラクター選択
+let eneCara = enemyCaracters[ 0 ];  // 敵キャラクター選択
 
 let score = 0;  // 自分の初期スコア
 let eneScore = 0;  // 敵の初期スコア
