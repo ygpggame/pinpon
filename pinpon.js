@@ -146,7 +146,7 @@ function updateEneGauge() {
     eneGageFill.style.width = eneGage + '%';
 
     if (eneGage >= 100 && gage >= 100) {
-        message.textContent = "相手と自分の必殺技ゲージがMAXになりました！\n ダブルクリックで必殺技！！";
+        message.innerHTML = "相手と自分の必殺技ゲージがMAXになりました！<br>ダブルクリックで必殺技！！";
     } else if (eneGage >= 100) {
         eneGageFill.classList.add('full-gauge');
         message.textContent = "相手の必殺技ゲージがMAXになりました！";
@@ -326,7 +326,6 @@ function stopGame() {
     startButton.textContent = "再開する";
     startButton.classList.remove("d-none");
     godBack.classList.add("d-none");
-    fireBack.classList.add("d-none");
 
     playFlag = false;
     message.classList.add("d-none");
@@ -370,7 +369,7 @@ function resetImg() {
     kuma.classList.remove("d-none");
     back.classList.remove("d-none");
     eneImg.classList.remove("d-none");
-    pinpon2.classList.remove("d-none");
+    pinpon2.classList.add("d-none");
     x = back.width / 2;
     y = back.height - 30;
 }
