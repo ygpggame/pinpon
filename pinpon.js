@@ -1,3 +1,5 @@
+// 体験１ 必殺技を表示する。 true:使用可能 false:使用不可
+let hissatuFlag = true;
 // 自分のキャラクター一覧
 let myCaracters = {
     0:"kuma", 
@@ -10,41 +12,48 @@ let enemyCaracters = {
     1: "kami", 
     2:"akuma"
 };
-let myCara = myCaracters[0];  // キャラクター選択
-let eneCara = enemyCaracters[0];  // 敵キャラクター選択
+// 体験２　キャラクター選択する。数字を変えるとキャラクターが変わる。
+let myCara = myCaracters[ 0 ];  // 自分のキャラクター選択
+let eneCara = enemyCaracters[ 1 ];  // 敵キャラクター選択
 
-let hissatuFlag = true;  // 必殺技使用フラグ
-
-let score = 0;  // 自分のスコア
-let eneScore = 0;  // 敵のスコア
-let kumaX = 950;  // カゴX座標
+let score = 0;  // 自分の初期スコア
+let eneScore = 0;  // 敵の初期スコア
+let kumaX = 950;  // くまの初期X座標
 let moveId = 0;  // タイマーID
 let kumId = 0;  // タイマーID
 let basketX = 950;  // カゴX座標
 let eneBasketX = 0;  // 敵カゴX座標
 let eneId = 0;  // タイマーID
 let pointId = 0;  // タイマーID
+// くまの要素の取得
 let kuma = document.getElementById("js-kuma");
+// ボールの要素の取得
 let pinpon2 = document.getElementById("js-pinpon2");
+// スタートのボタン要素の取得
 const startButton = document.getElementById("js-start");
+// 得点表示要素の取得
 const result = document.getElementById("js-result");
+// 敵得点表示要素の取得
 let ene = document.getElementById("js-ene");
+// 敵キャラクターの要素の取得
 let eneImg = document.getElementById("js-ene-img");
 if (eneCara === "kami") {
     eneImg = document.getElementById("js-god-img");
 }
+
+// 敵必殺技炎で使うの要素の取得
 const eneFire = document.getElementById("js-ene-fire");
 const left = document.getElementById("left");
 const right = document.getElementById("right");
 const fireImg = document.getElementById("js-fire-img");
 let fireMovie = document.getElementById("fire-movie");
+let iceMovie = document.getElementById("js-ice-movie"); 
 let fireKuma = document.getElementById("js-kuma-fire");
 const back = document.getElementById("js-back");
 const backFire = document.getElementById("js-back-fire");
 const fireRight = document.getElementById("js-fire-right");
 const fireLeft = document.getElementById("js-fire-left");
 
-let iceMovie = document.getElementById("js-ice-movie");
 let iceBack = document.getElementById("js-ice-back");
 let iceKuma = document.getElementById("js-ice-kuma");
 
@@ -409,6 +418,7 @@ function godDrive() {
         eneScore += 1;
         ene.textContent = eneScore + "点";
         stopGame();
+        WinLose();
     }, 11000);
 }
 
