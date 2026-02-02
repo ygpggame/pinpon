@@ -2,15 +2,15 @@
 let hissatuFlag = true;
 // 自分のキャラクター一覧
 let myCaracters = {
-    0:"kuma", 
-    1:"akira", 
-    2:"inazuma"
+    0: "kuma", 
+    1: "akira", 
+    2: "panda",
 }; 
 // 敵キャラクター一覧
 let enemyCaracters = {
     0: "ice", 
     1: "kami", 
-    2:"akuma"
+    2: "akuma",
 };
 // 体験２　キャラクター選択する。数字を変えるとキャラクターが変わる。
 let myCara = myCaracters[ 0 ];  // 自分のキャラクター選択
