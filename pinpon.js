@@ -18,11 +18,13 @@ let eneCara = enemyCaracters[ 0 ];  // 敵キャラクター選択
 
 let score = 0;  // 自分の初期スコア
 let eneScore = 0;  // 敵の初期スコア
-let kumaX = 950;  // くまの初期X座標
+let kumaX = 950;  // 自分のX座標
+let basketX = 950;  // X座標
+let eneBasketX = 0;  // 敵カゴX座標
+// ピンポン玉の動く速さ、数字が少ないほど、ボールが速くなる
+let ballSpeed = 5;
 let moveId = 0;  // タイマーID
 let kumId = 0;  // タイマーID
-let basketX = 950;  // カゴX座標
-let eneBasketX = 0;  // 敵カゴX座標
 let eneId = 0;  // タイマーID
 let pointId = 0;  // タイマーID
 // くまの要素の取得
@@ -44,7 +46,23 @@ if (eneCara === "kami") {
 } else if (eneCara === "akuma") {
     eneImg = document.getElementById("js-akuma-img");
 }
+let gage = 0;// 必殺技ゲージ
+let tp = 0; // 自分のTP数
+let maxGage = 10; // 自分が必殺技に必要なTP数
+let eneGage = 0; // 敵必殺技ゲージ
+let maxEneGage = 20;  // 敵が必殺技に必要なTP数
+let ballRandomMax = 3;
+// 敵の必殺技発動確率（0〜10の数字で設定、数字が大きいほど発動しやすい）
+let eneIcePer = 2;
+const message = document.getElementById('js-message');
 
+let eneTp = 0;// 敵のTP数
+// 自分のゲージの要素
+const gageFill = document.getElementById('gauge-fill');
+// 敵必殺技ゲージ要素の取得
+let eneGageFill = document.getElementById('ene-gauge-fill');
+// 敵必殺技ゲージ枠の要素の取得
+let eneGageContainer = document.getElementById('ene-gauge-container');
 // 敵必殺技炎で使うの要素の取得
 let fireMovie = document.getElementById("fire-movie");
 const eneFire = document.getElementById("js-ene-fire");
@@ -57,21 +75,6 @@ const fireLeft = document.getElementById("js-fire-left");
 let iceMovie = document.getElementById("js-ice-movie"); 
 let iceBack = document.getElementById("js-ice-back");
 let iceKuma = document.getElementById("js-ice-kuma");
-
-let tp = 0; // 自分のTP数
-let maxGage = 10; // 必要なTP数
-let gage = 0;// 必殺技ゲージ
-let ballRandomMax = 3;
-const gageFill = document.getElementById('gauge-fill');
-const message = document.getElementById('js-message');
-
-let eneTp = 0;// 敵のTP数
-let maxEneGage = 20;  // 必要なTP数
-let eneGage = 0; // 敵必殺技ゲージ
-// 敵必殺技ゲージ要素の取得
-let eneGageFill = document.getElementById('ene-gauge-fill');
-// 敵必殺技ゲージ枠の要素の取得
-let eneGageContainer = document.getElementById('ene-gauge-container');
 // 羽の必殺技で使う要素の取得
 let godMovie = document.getElementById("js-god-movie");
 let godBack = document.getElementById("js-god-back");
@@ -92,8 +95,6 @@ let playFlag = false;
 let eneReturn = 5;
 let eneCount = 0;
 let eneReturnMax = 35;
-// 敵の必殺技発動確率（0〜10の数字で設定、数字が大きいほど発動しやすい）
-let eneIcePer = 2;
 
 const winArea = document.getElementById("js-win");
 const loseArea = document.getElementById("js-lose");
@@ -110,7 +111,7 @@ function game() {
     eneReturn = Math.floor(Math.random() * (eneReturnMax - eneReturn)) + eneReturn;
     kuma.classList.remove("d-none");
     pinpon2.classList.remove("d-none");
-    moveId = setInterval(moveBall, 5);
+    moveId = setInterval(moveBall, ballSpeed);
 
     kuma.style.top = 620 + "px";
     kuma.style.left = kumaX + "px";
