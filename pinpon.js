@@ -371,8 +371,10 @@ restartButtons.forEach((button) => {
 function WinLose() {
     if (score >= winPoint) {
         winArea.classList.remove("d-none");
+        startButton.classList.add("d-none");
     } else if (eneScore >= winPoint) {
         loseArea.classList.remove("d-none");
+        startButton.classList.add("d-none");
     }
 }
 
