@@ -462,5 +462,5 @@ function hellSpin() {
         ene.textContent = eneScore + "点";
         stopGame();
         WinLose();
-    }, 11000);
+    }, 12000);
 }
