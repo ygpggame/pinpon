@@ -92,7 +92,8 @@ let playFlag = false;
 let eneReturn = 5;
 let eneCount = 0;
 let eneReturnMax = 35;
-let eneIcePer = 8; // 敵氷必殺技発動確率（0〜10の数字で設定、数字が少ないほど発動しやすい）
+// 敵の必殺技発動確率（0〜10の数字で設定、数字が大きいほど発動しやすい）
+let eneIcePer = 2;
 
 const winArea = document.getElementById("js-win");
 const loseArea = document.getElementById("js-lose");
@@ -171,7 +172,7 @@ function updateEneGauge() {
     }
     if (eneGage >= 100) {
         let eneRan = Math.floor(Math.random() * 10);
-        if (eneRan >= eneIcePer && hissatuFlag) {
+        if (eneRan >= (10 - eneIcePer) && hissatuFlag) {
             if (eneCara === "ice") {
                 iceDrive();
             } else if (eneCara === "kami") {
@@ -184,7 +185,7 @@ function updateEneGauge() {
 }
 
 addEventListener("dblclick", (e) => {
-    if ((gage < 100 || !playFlag) && hissatuFlag ) {
+    if ((gage < 100 || !playFlag) && hissatuFlag) {
         return;
     }
     fireSmash();
