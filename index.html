@@ -5,14 +5,15 @@
         <link rel="stylesheet" href="pinpon.css">
     </head>
     <body>
+        <!-- 体験１ 得点を表示する -->
         <div class="score-board">
             <div class="my">
                 <p class="my-t">自分の得点</p>
-                <p class="result" id="js-result">0</p>
+                <p class="result" id="js-result">0点</p>
             </div>
             <div class="ene-point">
                 <p class="ene-t">相手の得点</p>
-                <p class="result" id="js-ene">0</p>
+                <p class="result" id="js-ene">0点</p>
             </div>
         </div>
         <video id="fire-movie" class="hissatu-movie d-none" src="https://4a3btzgslag1w7ue.public.blob.vercel-storage.com/movie/%E7%82%8E%E3%82%92%E5%A2%97%E3%82%84%E3%81%97%E3%81%9F%E3%82%B9%E3%83%9E%E3%83%83%E3%82%B7%E3%83%A5%E5%8B%95%E7%94%BB.mp4">
@@ -31,24 +32,29 @@
             <p>ご使用のブラウザでは動画再生に対応していません</p>
         </video>
 
+        <video src="https://4a3btzgslag1w7ue.public.blob.vercel-storage.com/movie/dragon.mp4" id="js-panda-movie" class="hissatu-movie d-none">
+            <p>ご使用のブラウザでは動画再生に対応していません</p>
+        </video>
+
         <button id="js-start" class="start-btn">スタート</button>
         <img id="js-kuma" src="https://4a3btzgslag1w7ue.public.blob.vercel-storage.com/soccer/takkyukuma.png" class="kuma d-none cara">
+        <img id="js-panda" src="https://4a3btzgslag1w7ue.public.blob.vercel-storage.com/soccer/panda.png" alt="パンダ" class="panda d-none cara">
         <img id="js-kuma-fire" src="https://4a3btzgslag1w7ue.public.blob.vercel-storage.com/soccer/firekumatakkyu.png" alt="くま炎" class="cara d-none fire-kuma">
         <img id="js-pinpon" src="https://4a3btzgslag1w7ue.public.blob.vercel-storage.com/soccer/pinpon2.png" class="pinpon d-none cara">
-        <img id="js-pinpon2" src="https://4a3btzgslag1w7ue.public.blob.vercel-storage.com/soccer/pinpon2.png" class="pinpon d-none cara">
         <img id="js-ene-img" src="https://4a3btzgslag1w7ue.public.blob.vercel-storage.com/soccer/pinponmusu.png" class="ene cara d-none">
         <img id="js-god-img" src="https://4a3btzgslag1w7ue.public.blob.vercel-storage.com/soccer/godcara.png" alt="神くま" class="ene cara d-none god-kuma">
-        <img id="js-akuma-img" src="https://4a3btzgslag1w7ue.public.blob.vercel-storage.com/soccer/akumatt.png" alt="悪魔卓球" class="ene cara d-none akuma-img">
+        <img id="js-akuma-img" src="https://4a3btzgslag1w7ue.public.blob.vercel-storage.com/soccer/akuma.png" alt="悪魔卓球" class="ene cara d-none akuma-img">
         <img id="js-ene-fire" src="https://4a3btzgslag1w7ue.public.blob.vercel-storage.com/soccer/firemusu.png" alt="相手炎" class="ene-fire cara d-none">
 
         <img src="https://4a3btzgslag1w7ue.public.blob.vercel-storage.com/soccer/firepipon.png" alt="fire-icon" id="js-fire-img" class="d-none fire-img cara">
-        <img src="https://4a3btzgslag1w7ue.public.blob.vercel-storage.com/soccer/daitt%20%281%29.png" class="back-img" id="js-back">
+        <img src="https://4a3btzgslag1w7ue.public.blob.vercel-storage.com/soccer/daittw.png" class="back-img" id="js-back">
         <img src="https://4a3btzgslag1w7ue.public.blob.vercel-storage.com/soccer/icekuma.png" alt="氷くま"class="cara d-none ice-kuma kuma" id="js-ice-kuma">
         <img src="https://4a3btzgslag1w7ue.public.blob.vercel-storage.com/soccer/icedai.png" alt="氷台" class="back-img d-none" id="js-ice-back">
         <img src="https://4a3btzgslag1w7ue.public.blob.vercel-storage.com/soccer/firetable.png" alt="炎の背景" class="back-img d-none" id="js-back-fire">
         <img src="https://4a3btzgslag1w7ue.public.blob.vercel-storage.com/soccer/fireimg.png" alt="炎" id="js-fire-right" class="fire-right d-none">
         <img src="https://4a3btzgslag1w7ue.public.blob.vercel-storage.com/soccer/fireimg.png" alt="炎" id="js-fire-left" class="fire-left d-none">
         <img src="https://4a3btzgslag1w7ue.public.blob.vercel-storage.com/soccer/trnadoakumat.png" alt="あくまトルネード" id="js-akuma-trnado" class="akuma-back d-none">
+        <img src="https://4a3btzgslag1w7ue.public.blob.vercel-storage.com/movie/ryu.png" alt="竜" class="ryu d-none" id="js-doragon">
         <div id="js-message" class="d-none message">自分の必殺技ゲージがMAXになりました！<br>ダブルクリックで必殺技！！</div> 
         <div id="gauge-container" class="gauge-container">
             <div id="gauge-fill" class="gauge-fill"></div>
