@@ -58,6 +58,7 @@ let maxGage = 10; // 自分が必殺技に必要なTP数
 let eneGage = 0; // 敵必殺技ゲージ
 let maxEneGage = 20;  // 敵が必殺技に必要なTP数
 let ballRandomMax = 3;
+let RandomTime = 1400;
 // 敵の必殺技発動確率（0〜10の数字で設定、数字が大きいほど発動しやすい）
 let eneIcePer = 2;
 let winPoint = 5; // 勝利条件点数
@@ -127,7 +128,7 @@ function game() {
     kumId = setInterval(kumaCatch, 50);
     eneId = setInterval(enePlayer, 20);
     pointId = setInterval(pointPlus, 60);
-    randId = setInterval(randBall, 1400);
+    randId = setInterval(randBall, RandomTime);
 };
 
 window.addEventListener("mousemove", (e) => {
