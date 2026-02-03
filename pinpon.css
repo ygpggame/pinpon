@@ -58,6 +58,29 @@
     }
 }
 
+@keyframes tornado {
+    from {
+        transform: rotate(0deg);    
+    }
+    to {
+        transform: rotate(360deg);
+    }
+    0% {
+        top: 40px;
+        transform: rotate(0deg);  
+    }
+
+    80% {
+        top: 700px;
+        transform: rotate(720deg);
+    }
+
+    100% {
+        top: 700px;
+        transform: rotate(1080deg);
+    }
+}
+
 /* 必殺技ゲージのコンテナ */
 .gauge-container {
     width: 400px;
@@ -113,6 +136,10 @@
     animation-duration: 1.2s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
+}
+
+.trnado {
+    animation: tornado 1.2s linear infinite;
 }
 
 .d-none {
@@ -280,6 +307,18 @@
     height: 700px;
     top: 0;
     left: 200px;
+}
+
+.akuma-back {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+}
+
+.akuma-img {
+    width: 150px;
+    height: 80px;
 }
 
 .big-ball {

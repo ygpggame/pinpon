@@ -41,6 +41,8 @@ let ene = document.getElementById("js-ene");
 let eneImg = document.getElementById("js-ene-img");
 if (eneCara === "kami") {
     eneImg = document.getElementById("js-god-img");
+} else if (eneCara === "akuma") {
+    eneImg = document.getElementById("js-akuma-img");
 }
 
 // 敵必殺技炎で使うの要素の取得
@@ -73,6 +75,9 @@ let eneGageContainer = document.getElementById('ene-gauge-container');
 // 羽の必殺技で使う要素の取得
 let godMovie = document.getElementById("js-god-movie");
 let godBack = document.getElementById("js-god-back");
+// 悪魔の必殺技で使う要素の取得
+let akumaMovie = document.getElementById("js-akuma-movie");
+let akumaBack = document.getElementById("js-akuma-trnado");
 
 // ボールの動き（参考）
 let x = back.width / 2;
@@ -171,6 +176,8 @@ function updateEneGauge() {
                 iceDrive();
             } else if (eneCara === "kami") {
                 godDrive();
+            } else if (eneCara === "akuma") {
+                hellSpin();
             }
         }
     }
@@ -423,8 +430,37 @@ function godDrive() {
     }, 11000);
 }
 
-function inazumaBrust() {
-    if (gage < 100 || !playFlag) {
+function hellSpin() {
+    if (eneGage < 100 || !playFlag) {
         return;
     }
+    clearInterval(moveId);
+    clearInterval(eneId);
+    clearInterval(pointId);
+    akumaMovie.classList.remove("d-none");
+    akumaMovie.currentTime = 0;
+    akumaMovie.play();
+    pinpon2.classList.add("d-none");
+    message.classList.add("d-none");
+    eneGage = 0;
+    updateEneGauge();
+    setTimeout(() => {
+        akumaMovie.classList.add("d-none");
+    }, 8000);
+    setTimeout(() => {
+        akumaBack.style.top ="20px";
+        akumaBack.style.left =  pinpon2.style.left.replace("px", "");
+        akumaBack.classList.remove("d-none");
+        akumaBack.classList.add("trnado");
+    }, 10000);
+    setTimeout(() => {
+        akumaBack.classList.add("d-none");
+        pinpon2.classList.remove("trnado");
+        
+        alert("相手に得点が入りました！！");
+        eneScore += 1;
+        ene.textContent = eneScore + "点";
+        stopGame();
+        WinLose();
+    }, 11000);
 }
