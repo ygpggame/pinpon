@@ -18,9 +18,11 @@ let eneCara = enemyCaracters[ 0 ];  // 敵キャラクター選択
 
 // 自分のキャラクターの要素の取得
 let kuma = document.getElementById("js-kuma");
-if (myCara ==="panda") {
+if (myCara === "panda") {
     kuma = document.getElementById("js-panda");
-} 
+} else if (myCara === "akira") {
+    kuma = document.getElementById("js-akira");
+}
 // 敵キャラクターの要素の取得
 let eneImg = document.getElementById("js-ene-img");
 if (eneCara === "kami") {
@@ -106,6 +108,9 @@ let akumaBack = document.getElementById("js-akuma-trnado");
 // パンダの必殺技で使う要素の取得
 let pandaMovie = document.getElementById("js-panda-movie");
 let doragon = document.getElementById("js-doragon");
+// あきらが使う要素の取得
+let akiraMovie = document.getElementById("js-akira-movie");
+let netto = document.getElementById("js-netto");
 
 const winArea = document.getElementById("js-win");
 const loseArea = document.getElementById("js-lose");
@@ -202,7 +207,7 @@ addEventListener("dblclick", (e) => {
     if (myCara === "kuma") {
         fireSmash();
     } else if (myCara === "akira") {
-        nettZurashi();
+        specialNetto();
     } else if (myCara === "panda") {
         noboriRyu();
     }
@@ -215,6 +220,7 @@ function fireSmash() {
     clearInterval(moveId);
     clearInterval(eneId);
     clearInterval(pointId);
+    playFlag=false;
     fireMovie.classList.remove("d-none");
     fireMovie.currentTime = 0;
     fireMovie.play();
@@ -256,6 +262,7 @@ function iceDrive() {
     if (gage < 100 || !playFlag) {
         return;
     }
+    playFlag=false;
     clearInterval(moveId);
     clearInterval(eneId);
     clearInterval(pointId);
@@ -405,6 +412,7 @@ function resetImg() {
     kuma.classList.remove("d-none");
     back.classList.remove("d-none");
     eneImg.classList.remove("d-none");
+    netto.classList.add("d-none");
     pinpon.classList.add("d-none");
     x = back.width / 2;
     y = back.height - 30;
@@ -414,6 +422,7 @@ function godDrive() {
     if (eneGage < 100 || !playFlag) {
         return;
     }
+    playFlag=false;
     clearInterval(moveId);
     clearInterval(eneId);
     clearInterval(pointId);
@@ -453,6 +462,7 @@ function hellSpin() {
     if (eneGage < 100 || !playFlag) {
         return;
     }
+    playFlag=false;
     clearInterval(moveId);
     clearInterval(eneId);
     clearInterval(pointId);
@@ -484,14 +494,47 @@ function hellSpin() {
     }, 12000);
 }
 
-function superNetto() {
-
+function specialNetto() {
+    if (gage < 100 || !playFlag) {
+        return;
+    }
+    playFlag=false;
+    clearInterval(moveId);
+    clearInterval(eneId);
+    clearInterval(pointId);
+    akiraMovie.classList.remove("d-none");
+    akiraMovie.currentTime = 0;
+    akiraMovie.play();
+    pinpon.classList.add("d-none");
+    setTimeout(() => {
+        akiraMovie.classList.add("d-none");
+    }, 8000);
+    setTimeout(() => {
+        netto.classList.remove("d-none");
+        fadeinImg(netto, backFire);
+    }, 9000);
+    setTimeout(() => {
+        pinpon.style.top = "40px";
+        pinpon.classList.remove("d-none");
+        pinpon.classList.add("rakka-half");;
+    }, 10000);
+    setTimeout(() => {
+        pinpon.classList.remove("rakka-half");
+        stopGame();
+        alert("自分に得点が入りました！！");
+        WinLose();
+    }, 11000);
+    gage = 0;
+    updateGauge();
+    score += 1;
+    result.textContent = score + "点";
 }
 
 function noboriRyu() {
     if (gage < 100 || !playFlag) {
         return;
     }
+    playFlag=false;
     clearInterval(moveId);
     clearInterval(eneId);
     clearInterval(pointId);
