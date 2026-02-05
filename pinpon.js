@@ -1,4 +1,14 @@
+const displayPoint = document.getElementById("js-display-point");
+function pointDisplay() {
+    if (displayPoint !== null) {
+        displayPoint.classList.remove("d-none");
+    }
+}
+// 体験１ 得点を表示する
+// コメントの説明をする
+pointDisplay();
 // 体験２ 必殺技を表示する。 true:使用可能 false:使用不可
+// 変数の説明をする
 let hissatuFlag = true;
 // 自分のキャラクター一覧
 let myCaracters = {
@@ -13,6 +23,7 @@ let enemyCaracters = {
     2: "akuma",
 };
 // 体験３　キャラクター選択する。数字を変えるとキャラクターが変わる。
+// 配列の説明をする
 let myCara = myCaracters[ 0 ];  // 自分のキャラクター選択
 let eneCara = enemyCaracters[ 0 ];  // 敵キャラクター選択
 
@@ -77,7 +88,6 @@ let playFlag = false;
 let eneReturn = 5;
 let eneCount = 0;
 let eneReturnMax = 35;
-
 const message = document.getElementById('js-message');
 
 let eneTp = 0;// 敵のTP数
@@ -157,6 +167,9 @@ function enePlayer() {
 }
 
 function updateGauge() {
+    if (!hissatuFlag) {
+        return;
+    }
     if (gage > 100) {
         gage = 100;
     }
@@ -172,6 +185,9 @@ function updateGauge() {
 }
 
 function updateEneGauge() {
+    if (!hissatuFlag) {
+        return;
+    }
     if (eneGage > 100) {
         eneGage = 100;
     }
@@ -374,7 +390,6 @@ function stopGame() {
     y = back.height - 30;
     dx = 1;
     dy = -5;
-    bai = false;
     pinponX = 0;
     yX = 0;
     randId = 0;
