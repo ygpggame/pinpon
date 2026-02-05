@@ -1,4 +1,6 @@
+// 得点表示要素の取得
 const displayPoint = document.getElementById("js-display-point");
+// 得点表示関数
 function pointDisplay() {
     if (displayPoint !== null) {
         displayPoint.classList.remove("d-none");
@@ -47,12 +49,6 @@ let eneScore = 0;  // 敵の初期スコア
 let kumaX = 950;  // 自分のX座標
 let basketX = 950;  // X座標
 let eneBasketX = 0;  // 敵カゴX座標
-// ピンポン玉の動く速さ、数字が少ないほど、ボールが速くなる
-let ballSpeed = 5;
-let moveId = 0;  // タイマーID
-let kumId = 0;  // タイマーID
-let eneId = 0;  // タイマーID
-let pointId = 0;  // タイマーID
 
 // ボールの要素の取得
 let pinpon = document.getElementById("js-pinpon");
@@ -70,24 +66,27 @@ let tp = 0; // 自分のTP数
 let maxGage = 10; // 自分が必殺技に必要なTP数
 let eneGage = 0; // 敵必殺技ゲージ
 let maxEneGage = 20;  // 敵が必殺技に必要なTP数
-let ballRandomMax = 3;
-let RandomTime = 1400;
+let ballRandomMax = 3; // ボールのX軸ランダム変数最大値
+let RandomTime = 1400; // ボールのX軸ランダム変数変更時間（ミリ秒）
 // 敵の必殺技発動確率（0〜10の数字で設定、数字が大きいほど発動しやすい）
 let eneIcePer = 2;
 let winPoint = 5; // 勝利条件点数
-// ボールの動き（参考）
-let x = back.width / 2;
-let y = back.height - 30;
-let dx = 1;
-let dy = -5;
-let pinponX = 0;
-let yX = 0;
-let randId = 0;
-let ranNum = 1;
-let playFlag = false;
-let eneReturn = 5;
-let eneCount = 0;
-let eneReturnMax = 35;
+// ボールの動き
+let x = back.width / 2; // ボールのX座標の初期値
+let y = back.height - 30; // ボールのY座標の初期値
+// 体験4 ボールの速度を調整しよう
+let ballSpeed = 5; // ピンポン玉の動く速さ、数字が少ないほど、ボールが速くなる
+let dx = 1; // ボールのX軸の動く速さ、数字が大きいほど、ボールが速くなる
+let dy = -5; // ボールのY軸の動く速さ、数字が大きいほど、ボールが速くなる
+let pinponX = 0;  // ピンポン玉X座標
+let yX = 0;  // ピンポン玉Y座標
+let ranNum = 1; // ボールのX軸ランダム変数
+let playFlag = false; // ゲームプレイ中かどうかのフラグ
+// 敵がボールを返す回数関連
+let eneReturn = 5; // 敵がボールを返す回数最小値
+let eneReturnMax = 35; // 敵がボールを返す回数最大値
+let eneCount = 0; // 敵がボールを返した回数
+// メッセージ要素の取得
 const message = document.getElementById('js-message');
 
 let eneTp = 0;// 敵のTP数
@@ -125,6 +124,12 @@ let netto = document.getElementById("js-netto");
 const winArea = document.getElementById("js-win");
 const loseArea = document.getElementById("js-lose");
 let restartButtons = document.getElementsByClassName("js-restart");
+
+let moveId = 0;  // タイマーID
+let kumId = 0;  // タイマーID
+let eneId = 0;  // タイマーID
+let pointId = 0;  // タイマーID
+let randId = 0;  // タイマーID
 
 startButton.addEventListener("click", (e) => {
     resetImg();
