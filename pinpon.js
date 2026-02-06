@@ -137,14 +137,14 @@ let eneId = 0;  // タイマーID
 let pointId = 0;  // タイマーID
 let randId = 0;  // タイマーID
 // 体験入学 大きさの調整
-let backHeight = 700; // 背景の高さ
-let backWidth = 1000; // 背景の幅
-let topY = backHeight - 80; // 自分の位置（上からどの場所で固定するか）
-let pinponSize = 50; // ピンポン玉の大きさ
-let myCaraHeight = 100; // 自分のキャラの高さ
-let myCaraWidth = 100; // 自分のキャラの幅
-let eneCaraHeght = 100; // 敵キャラの高さ
-let eneCaraWidth = 100; // 敵キャラの幅
+let backHeight = 700; // 体験入学 背景の高さ
+let backWidth = 1000; // 体験入学 背景の幅
+let topY = backHeight - 80; // 体験入学 自分の位置（上からどの場所で固定するか）
+let pinponSize = 50; // 体験入学 ピンポン玉の大きさ
+let myCaraHeight = 100; // 体験入学 自分のキャラの高さ
+let myCaraWidth = 100; // 体験入学 自分のキャラの幅
+let eneCaraHeght = 100; // 体験入学 敵キャラの高さ
+let eneCaraWidth = 100; // 体験入学 敵キャラの幅
 // 画像サイズの調整する関数
 function imgSize() {
     back.style.height = backHeight + "px";
