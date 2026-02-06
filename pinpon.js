@@ -74,31 +74,32 @@ const result = document.getElementById("js-result");
 // 敵得点表示要素の取得
 let ene = document.getElementById("js-ene");
 
-let gage = 0;// 必殺技ゲージ
-let maxGage = 10; // 自分が必殺技に必要なTP数
-let eneGage = 0; // 敵必殺技ゲージ
-let maxEneGage = 20;  // 敵が必殺技に必要なTP数
-let ballRandomMax = 3; // ボールのX軸ランダム変数最大値
-let RandomTime = 1400; // ボールのX軸ランダム変数変更時間（ミリ秒）
-let kumaSpeed = 50; // 自分が動く時間のインターバル (ミリ秒)
-let eneSpeed = 20; // 敵が動く時間のインターバル (ミリ秒)
-let eneIcePer = 2;// 敵の必殺技発動確率（0〜10の数字で設定、数字が大きいほど発動しやすい）
-let winPoint = 5; // 勝利条件点数
-// ボールの動き
-let x = back.width / 2; // ボールのX座標の初期値
-let y = back.height - 30; // ボールのY座標の初期値
+let gage = 0;// 体験入学 必殺技ゲージ
+let maxGage = 10; // 体験入学 自分が必殺技に必要なゲージ数
+let eneGage = 0; //体験入学 敵必殺技ゲージ
+let maxEneGage = 20;  // 体験入学 敵が必殺技に必要なゲージ数
+let ballRandomMax = 3; // 体験入学 ボールのX軸ランダム変数最大値
+let RandomTime = 1400; // 体験入学 ボールのX軸ランダム変数変更時間（ミリ秒）
+let kumaSpeed = 50; // 体験入学 自分が動く時間のインターバル (ミリ秒)
+let eneSpeed = 20; // 体験入学 敵が動く時間のインターバル (ミリ秒)
+let eneIcePer = 2;// 体験入学 敵の必殺技発動確率（0〜10の数字で設定、数字が大きいほど発動しやすい）
+let winPoint = 5; // 体験入学 勝利条件点数
+// 体験入学 ボールの動き
+let x = back.width / 2; // 体験入学 ボールのX座標の初期値
+let y = back.height - 30; // 体験入学 ボールのY座標の初期値
 // 体験入学4 ボールの速度を調整しよう
-let ballSpeed = 5; // ピンポン玉の動く速さ、数字が少ないほど、ボールが速くなる
-let dx = 1; // ボールのX軸の動く速さ、数字が大きいほど、ボールが速くなる
-let dy = -5; // ボールのY軸の動く速さ、数字が大きいほど、ボールが速くなる
+let ballSpeed = 5; // 体験入学 ピンポン玉の動く速さ、数字が少ないほど、ボールが速くなる
+let dx = 1; // 体験入学 ボールのX軸の動く速さ、数字が大きいほど、ボールが速くなる
+let dy = -5; // 体験入学 ボールのY軸の動く速さ、数字が大きいほど、ボールが速くなる
 let pinponX = 0;  // ピンポン玉X座標
 let yX = 0;  // ピンポン玉Y座標
 let ranNum = 1; // ボールのX軸ランダム変数
 let playFlag = false; // ゲームプレイ中かどうかのフラグ
-// 敵がボールを返す回数関連
-let eneReturn = 5; // 敵がボールを返す回数最小値
-let eneReturnMax = 35; // 敵がボールを返す回数最大値
+// 体験入学 敵がボールを返す回数関連
+let eneReturn = 5; // 体験入学 敵がボールを返す回数最小値
+let eneReturnMax = 35; // 体験入学 敵がボールを返す回数最大値
 let eneCount = 0; // 敵がボールを返した回数
+let superPoint = 1; // 体験入学 必殺技の時の得点
 // メッセージ要素の取得
 const message = document.getElementById('js-message');
 // 自分のゲージの要素
@@ -135,7 +136,7 @@ let kumId = 0;  // タイマーID
 let eneId = 0;  // タイマーID
 let pointId = 0;  // タイマーID
 let randId = 0;  // タイマーID
-// 大きさの調整
+// 体験入学 大きさの調整
 let backHeight = 700; // 背景の高さ
 let backWidth = 1000; // 背景の幅
 let topY = backHeight - 80; // 自分の位置（上からどの場所で固定するか）
@@ -144,7 +145,7 @@ let myCaraHeight = 100; // 自分のキャラの高さ
 let myCaraWidth = 100; // 自分のキャラの幅
 let eneCaraHeght = 100; // 敵キャラの高さ
 let eneCaraWidth = 100; // 敵キャラの幅
-
+// 画像サイズの調整する関数
 function imgSize() {
     back.style.height = backHeight + "px";
     back.style.width = backWidth + "px";
