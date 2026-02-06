@@ -80,6 +80,8 @@ let eneGage = 0; // 敵必殺技ゲージ
 let maxEneGage = 20;  // 敵が必殺技に必要なTP数
 let ballRandomMax = 3; // ボールのX軸ランダム変数最大値
 let RandomTime = 1400; // ボールのX軸ランダム変数変更時間（ミリ秒）
+let kumaSpeed = 50; // 自分が動く時間のインターバル (ミリ秒)
+let eneSpeed = 20; // 敵が動く時間のインターバル (ミリ秒)
 let eneIcePer = 2;// 敵の必殺技発動確率（0〜10の数字で設定、数字が大きいほど発動しやすい）
 let winPoint = 5; // 勝利条件点数
 // ボールの動き
@@ -133,6 +135,38 @@ let kumId = 0;  // タイマーID
 let eneId = 0;  // タイマーID
 let pointId = 0;  // タイマーID
 let randId = 0;  // タイマーID
+// 大きさの調整
+let backHeight = 700; // 背景の高さ
+let backWidth = 1000; // 背景の幅
+let topY = backHeight - 80; // 自分の位置（上からどの場所で固定するか）
+let pinponSize = 50; // ピンポン玉の大きさ
+let myCaraHeight = 100; // 自分のキャラの高さ
+let myCaraWidth = 100; // 自分のキャラの幅
+let eneCaraHeght = 100; // 敵キャラの高さ
+let eneCaraWidth = 100; // 敵キャラの幅
+
+function imgSize() {
+    back.style.height = backHeight + "px";
+    back.style.width = backWidth + "px";
+    iceBack.style.height = backHeight + "px";
+    iceBack.style.width = backWidth + "px";
+    backFire.style.height = backHeight + "px";
+    backFire.style.width = backWidth + "px";
+    pinpon.style.height = pinponSize + "px";
+    pinpon.style.width = pinponSize + "px";
+    fireImg.style.height = pinponSize + "px";
+    fireImg.style.width = pinponSize + "px";
+    kuma.style.width = myCaraWidth + "px";
+    kuma.style.height = myCaraHeight + "px";
+    iceKuma.style.width = myCaraWidth + "px";
+    iceKuma.style.height = myCaraHeight + "px";
+    eneImg.style.width = eneCaraWidth + "px";
+    eneImg.style.height = eneCaraHeght + "px";
+    eneFire.style.width = eneCaraWidth + "px";
+    eneFire.style.height = eneCaraHeght + "px";
+}
+
+imgSize();
 
 startButton.addEventListener("click", (e) => {
     resetImg();
@@ -146,19 +180,19 @@ function game() {
     pinpon.classList.remove("d-none");
     moveId = setInterval(moveBall, ballSpeed);
 
-    kuma.style.top = 620 + "px";
+    kuma.style.top = topY + "px";
     kuma.style.left = kumaX + "px";
-    kumId = setInterval(kumaCatch, 50);
-    eneId = setInterval(enePlayer, 20);
-    pointId = setInterval(pointPlus, 60);
+    kumId = setInterval(kumaCatch, kumaSpeed);
+    eneId = setInterval(enePlayer, eneSpeed);
+    pointId = setInterval(pointPlus, 50);
     randId = setInterval(randBall, RandomTime);
 };
 
 window.addEventListener("mousemove", (e) => {
     if (e.clientX < 25) {
         basketX = 25;
-    } else if (e.clientX > 950) {
-        basketX = 950;
+    } else if (e.clientX > (backWidth - 50)) {
+        basketX = (backWidth - 50);
     } else {
         basketX = e.clientX;
     }
@@ -166,7 +200,7 @@ window.addEventListener("mousemove", (e) => {
 
 function kumaCatch() {
     kuma.style.left = basketX + "px"
-    kuma.style.top = 620 + "px";
+    kuma.style.top = topY + "px";
 }
 
 function enePlayer() {
@@ -264,8 +298,8 @@ function pointPlus() {
     pinponX = pinpon.style.left.replace("px", "");
     yX = pinpon.style.top.replace("px", "");
 
-    if (yX > 640 && yX < 700) {
-        if (Math.abs(pinponX - basketX) < 100) {
+    if (yX > (backHeight - 60) && yX < backHeight) {
+        if (Math.abs(pinponX - basketX) < myCaraWidth) {
             gage += 100 / maxGage;
             updateGauge();
         } else  {
@@ -276,7 +310,7 @@ function pointPlus() {
             WinLose();
         }
     } else if (yX < 70) {
-        if (Math.abs(pinponX - eneBasketX) > 100) {
+        if (Math.abs(pinponX - eneBasketX) > eneCaraWidth) {
             score += 1;
             result.textContent = score + "点";
             stopGame();
@@ -501,7 +535,7 @@ function noboriRyu() {
     playMovie(false);
     setTimeout(() => {
         doragon.style.left = kuma.style.left;
-        pinpon.style.left = (Number(kuma.style.left.replace("px", "")) +400) + "px";
+        pinpon.style.left = (Number(kuma.style.left.replace("px", "")) + 400) + "px";
         doragon.style.top = "1000px";
         pinpon.style.top ="1000px";
         pinpon.classList.remove("d-none");
