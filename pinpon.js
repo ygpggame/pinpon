@@ -1,16 +1,16 @@
 // 得点表示要素の取得
 const displayPoint = document.getElementById("js-display-point");
-// 得点表示関数
+// 得点を表示する関数
 function pointDisplay() {
     if (displayPoint !== null) {
         displayPoint.classList.remove("d-none");
     }
 }
 // 体験入学1 得点を表示する
-// コメントの説明をする
+// コメントについての説明をする
 pointDisplay();
 // 体験入学2 必殺技を表示する。 true:使用可能 false:使用不可
-// 変数の説明をする
+// 変数についての説明をする
 let hissatuFlag = true;
 // 自分のキャラクター一覧
 let myCaracters = {
@@ -25,29 +25,36 @@ let enemyCaracters = {
     2: "akuma",
 };
 // 体験入学3　キャラクター選択する。数字を変えるとキャラクターが変わる。
-// 配列の説明をする
+// 配列についての説明をする
 let myCara = myCaracters[ 0 ];  // 自分のキャラクター選択
 let eneCara = enemyCaracters[ 0 ];  // 敵キャラクター選択
 
 // 自分のキャラクターの要素の取得
 let kuma = document.getElementById("js-kuma");
+// 必殺技の動画の要素の取得
 let hissatuMovie = document.getElementById("fire-movie");
+let iceKuma = document.getElementById("js-ice-kuma");
 if (myCara === "panda") {
     kuma = document.getElementById("js-panda");
     hissatuMovie = document.getElementById("js-panda-movie");
+    iceKuma = document.getElementById("js-ice-akira")
 } else if (myCara === "akira") {
     kuma = document.getElementById("js-akira");
     hissatuMovie = document.getElementById("js-akuma-movie");
+    iceKuma = document.getElementById("js-ice-panda");
 }
 // 敵キャラクターの要素の取得
 let eneImg = document.getElementById("js-ene-img");
 let hissatuEneMovie = document.getElementById("js-ice-movie");
+let eneFire = document.getElementById("js-ene-fire");
 if (eneCara === "kami") {
     eneImg = document.getElementById("js-god-img");
     hissatuEneMovie = document.getElementById("js-god-movie");
+    eneFire = document.getElementById("js-fire-god")
 } else if (eneCara === "akuma") {
     eneImg = document.getElementById("js-akuma-img");
     hissatuEneMovie = document.getElementById("js-akuma-movie");
+    eneFire = document.getElementById("js-fire-akuma");
 }
 
 let score = 0;  // 自分の初期スコア
@@ -70,7 +77,7 @@ let ene = document.getElementById("js-ene");
 let gage = 0;// 必殺技ゲージ
 let maxGage = 10; // 自分が必殺技に必要なTP数
 let eneGage = 0; // 敵必殺技ゲージ
-let maxEneGage = 2;  // 敵が必殺技に必要なTP数
+let maxEneGage = 20;  // 敵が必殺技に必要なTP数
 let ballRandomMax = 3; // ボールのX軸ランダム変数最大値
 let RandomTime = 1400; // ボールのX軸ランダム変数変更時間（ミリ秒）
 let eneIcePer = 2;// 敵の必殺技発動確率（0〜10の数字で設定、数字が大きいほど発動しやすい）
@@ -99,7 +106,6 @@ let eneGageFill = document.getElementById('ene-gauge-fill');
 // 敵必殺技ゲージ枠の要素の取得
 let eneGageContainer = document.getElementById('ene-gauge-container');
 // 敵必殺技炎で使うの要素の取得
-const eneFire = document.getElementById("js-ene-fire");
 const fireImg = document.getElementById("js-fire-img");
 let fireKuma = document.getElementById("js-kuma-fire");
 const backFire = document.getElementById("js-back-fire");
@@ -107,7 +113,6 @@ const fireRight = document.getElementById("js-fire-right");
 const fireLeft = document.getElementById("js-fire-left");
 // 氷の必殺技で使う要素の取得
 let iceBack = document.getElementById("js-ice-back");
-let iceKuma = document.getElementById("js-ice-kuma");
 // 羽の必殺技で使う要素の取得
 let godBack = document.getElementById("js-god-back");
 // 悪魔の必殺技で使う要素の取得
@@ -404,13 +409,13 @@ function fireSmash() {
         fireKuma.style.top = kuma.style.top;
         fadeinImg(fireKuma, kuma);
         fadeinImg(backFire, back);
-        fadeinImg(eneFire, eneImg);
         fadeinImg(fireRight, eneImg);
         fadeinImg(fireLeft, eneImg);
     }, 9000);
     setTimeout(() => {
         fireImg.classList.remove("d-none");
         fireImg.classList.add("smash");
+        fadeinImg(eneFire, eneImg);
     },11000);
     setTimeout(() => {
         fireImg.classList.add("d-none");
