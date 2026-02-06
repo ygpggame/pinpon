@@ -68,7 +68,6 @@ const result = document.getElementById("js-result");
 let ene = document.getElementById("js-ene");
 
 let gage = 0;// 必殺技ゲージ
-let tp = 0; // 自分のTP数
 let maxGage = 10; // 自分が必殺技に必要なTP数
 let eneGage = 0; // 敵必殺技ゲージ
 let maxEneGage = 2;  // 敵が必殺技に必要なTP数
@@ -93,7 +92,6 @@ let eneReturnMax = 35; // 敵がボールを返す回数最大値
 let eneCount = 0; // 敵がボールを返した回数
 // メッセージ要素の取得
 const message = document.getElementById('js-message');
-let eneTp = 0;// 敵のTP数
 // 自分のゲージの要素
 const gageFill = document.getElementById('gauge-fill');
 // 敵必殺技ゲージ要素の取得
@@ -263,7 +261,6 @@ function pointPlus() {
 
     if (yX > 640 && yX < 700) {
         if (Math.abs(pinponX - basketX) < 100) {
-            tp += 1;
             gage += 100 / maxGage;
             updateGauge();
         } else  {
@@ -281,7 +278,6 @@ function pointPlus() {
             alert("自分にポイントが入りました。");
             WinLose();
         } else {
-            eneTp += 1;
             eneGage += 100 / maxEneGage;
             updateEneGauge();
         }
@@ -384,6 +380,22 @@ function fadeinImg(object, deleteObject) {
     object.classList.add("fadein");
 }
 
+function hissatuPoint(eneFlag) {
+    if (eneFlag) {
+        stopGame();
+        alert("相手に得点が入りました！！");
+        eneScore += 1;
+        ene.textContent = eneScore + "点";
+        WinLose();
+    } else {
+        stopGame();
+        alert("自分に得点が入りました！！");
+        score += 1;
+        result.textContent = score + "点";
+        WinLose();
+    }
+}
+
 function fireSmash() {
     playMovie(false);
     setTimeout(() => {
@@ -405,11 +417,7 @@ function fireSmash() {
         fireImg.classList.remove("smash");
     }, 12000);
     setTimeout(() => {
-        stopGame();
-        alert("自分に得点が入りました！！");
-        WinLose();
-        score += 1;
-        result.textContent = score + "点";
+        hissatuPoint(false);
     }, 13500);
 }
 
@@ -429,10 +437,7 @@ function iceDrive() {
     setTimeout(() => {
         pinpon.classList.add("d-none");
         pinpon.classList.remove("rakka");
-        alert("相手に得点が入りました！！");
-        eneScore += 1;
-        ene.textContent = eneScore + "点";
-        stopGame();
+        hissatuPoint(true);
     }, 10000);
 }
 
@@ -451,12 +456,7 @@ function godDrive() {
         pinpon.classList.add("d-none");
         pinpon.classList.remove("rakka");
         pinpon.classList.remove("big-ball");
-        
-        alert("相手に得点が入りました！！");
-        eneScore += 1;
-        ene.textContent = eneScore + "点";
-        stopGame();
-        WinLose();
+        hissatuPoint(true);
     }, 11000);
 }
 
@@ -471,12 +471,7 @@ function hellSpin() {
     setTimeout(() => {
         akumaBack.classList.add("d-none");
         pinpon.classList.remove("trnado");
-        
-        alert("相手に得点が入りました！！");
-        eneScore += 1;
-        ene.textContent = eneScore + "点";
-        stopGame();
-        WinLose();
+        hissatuPoint(true);
     }, 12000);
 }
 
@@ -493,11 +488,7 @@ function specialNetto() {
     }, 10000);
     setTimeout(() => {
         pinpon.classList.remove("rakka-half");
-        stopGame();
-        alert("自分に得点が入りました！！");
-        score += 1;
-        result.textContent = score + "点";
-        WinLose();
+        hissatuPoint(false);
     }, 11000);
 }
 
@@ -517,10 +508,6 @@ function noboriRyu() {
         doragon.classList.remove("doragon");
         doragon.classList.add("d-none");
         pinpon.classList.remove("doragon");
-        stopGame();
-        alert("自分に得点が入りました！！");
-        WinLose();
-        score += 1;
-        result.textContent = score + "点";
+        hissatuPoint(false);
     }, 12000);
 }
