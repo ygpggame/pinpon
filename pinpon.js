@@ -6,10 +6,10 @@ function pointDisplay() {
         displayPoint.classList.remove("d-none");
     }
 }
-// 体験１ 得点を表示する
+// 体験入学1 得点を表示する
 // コメントの説明をする
 pointDisplay();
-// 体験２ 必殺技を表示する。 true:使用可能 false:使用不可
+// 体験入学2 必殺技を表示する。 true:使用可能 false:使用不可
 // 変数の説明をする
 let hissatuFlag = true;
 // 自分のキャラクター一覧
@@ -24,24 +24,30 @@ let enemyCaracters = {
     1: "kami", 
     2: "akuma",
 };
-// 体験３　キャラクター選択する。数字を変えるとキャラクターが変わる。
+// 体験入学3　キャラクター選択する。数字を変えるとキャラクターが変わる。
 // 配列の説明をする
 let myCara = myCaracters[ 0 ];  // 自分のキャラクター選択
 let eneCara = enemyCaracters[ 0 ];  // 敵キャラクター選択
 
 // 自分のキャラクターの要素の取得
 let kuma = document.getElementById("js-kuma");
+let hissatuMovie = document.getElementById("fire-movie");
 if (myCara === "panda") {
     kuma = document.getElementById("js-panda");
+    hissatuMovie = document.getElementById("js-panda-movie");
 } else if (myCara === "akira") {
     kuma = document.getElementById("js-akira");
+    hissatuMovie = document.getElementById("js-akuma-movie");
 }
 // 敵キャラクターの要素の取得
 let eneImg = document.getElementById("js-ene-img");
+let hissatuEneMovie = document.getElementById("js-ice-movie");
 if (eneCara === "kami") {
     eneImg = document.getElementById("js-god-img");
+    hissatuEneMovie = document.getElementById("js-god-movie");
 } else if (eneCara === "akuma") {
     eneImg = document.getElementById("js-akuma-img");
+    hissatuEneMovie = document.getElementById("js-akuma-movie");
 }
 
 let score = 0;  // 自分の初期スコア
@@ -65,16 +71,15 @@ let gage = 0;// 必殺技ゲージ
 let tp = 0; // 自分のTP数
 let maxGage = 10; // 自分が必殺技に必要なTP数
 let eneGage = 0; // 敵必殺技ゲージ
-let maxEneGage = 20;  // 敵が必殺技に必要なTP数
+let maxEneGage = 2;  // 敵が必殺技に必要なTP数
 let ballRandomMax = 3; // ボールのX軸ランダム変数最大値
 let RandomTime = 1400; // ボールのX軸ランダム変数変更時間（ミリ秒）
-// 敵の必殺技発動確率（0〜10の数字で設定、数字が大きいほど発動しやすい）
-let eneIcePer = 2;
+let eneIcePer = 2;// 敵の必殺技発動確率（0〜10の数字で設定、数字が大きいほど発動しやすい）
 let winPoint = 5; // 勝利条件点数
 // ボールの動き
 let x = back.width / 2; // ボールのX座標の初期値
 let y = back.height - 30; // ボールのY座標の初期値
-// 体験4 ボールの速度を調整しよう
+// 体験入学4 ボールの速度を調整しよう
 let ballSpeed = 5; // ピンポン玉の動く速さ、数字が少ないほど、ボールが速くなる
 let dx = 1; // ボールのX軸の動く速さ、数字が大きいほど、ボールが速くなる
 let dy = -5; // ボールのY軸の動く速さ、数字が大きいほど、ボールが速くなる
@@ -88,7 +93,6 @@ let eneReturnMax = 35; // 敵がボールを返す回数最大値
 let eneCount = 0; // 敵がボールを返した回数
 // メッセージ要素の取得
 const message = document.getElementById('js-message');
-
 let eneTp = 0;// 敵のTP数
 // 自分のゲージの要素
 const gageFill = document.getElementById('gauge-fill');
@@ -97,7 +101,6 @@ let eneGageFill = document.getElementById('ene-gauge-fill');
 // 敵必殺技ゲージ枠の要素の取得
 let eneGageContainer = document.getElementById('ene-gauge-container');
 // 敵必殺技炎で使うの要素の取得
-let fireMovie = document.getElementById("fire-movie");
 const eneFire = document.getElementById("js-ene-fire");
 const fireImg = document.getElementById("js-fire-img");
 let fireKuma = document.getElementById("js-kuma-fire");
@@ -105,24 +108,21 @@ const backFire = document.getElementById("js-back-fire");
 const fireRight = document.getElementById("js-fire-right");
 const fireLeft = document.getElementById("js-fire-left");
 // 氷の必殺技で使う要素の取得
-let iceMovie = document.getElementById("js-ice-movie"); 
 let iceBack = document.getElementById("js-ice-back");
 let iceKuma = document.getElementById("js-ice-kuma");
 // 羽の必殺技で使う要素の取得
-let godMovie = document.getElementById("js-god-movie");
 let godBack = document.getElementById("js-god-back");
 // 悪魔の必殺技で使う要素の取得
-let akumaMovie = document.getElementById("js-akuma-movie");
 let akumaBack = document.getElementById("js-akuma-trnado");
 // パンダの必殺技で使う要素の取得
-let pandaMovie = document.getElementById("js-panda-movie");
 let doragon = document.getElementById("js-doragon");
 // あきらが使う要素の取得
-let akiraMovie = document.getElementById("js-akira-movie");
 let netto = document.getElementById("js-netto");
-
+// 勝利した時に表示する画像の要素取得
 const winArea = document.getElementById("js-win");
+// 負けた時に表示する画像の要素取得
 const loseArea = document.getElementById("js-lose");
+// リセットボタンの要素取得
 let restartButtons = document.getElementsByClassName("js-restart");
 
 let moveId = 0;  // タイマーID
@@ -233,95 +233,6 @@ addEventListener("dblclick", (e) => {
         noboriRyu();
     }
 });
-
-function fireSmash() {
-    if (gage < 100 || !playFlag) {
-        return;
-    }
-    clearInterval(moveId);
-    clearInterval(eneId);
-    clearInterval(pointId);
-    playFlag=false;
-    fireMovie.classList.remove("d-none");
-    fireMovie.currentTime = 0;
-    fireMovie.play();
-    pinpon.classList.add("d-none");
-    setTimeout(() => {
-        fireMovie.classList.add("d-none");
-    }, 8000);
-
-    setTimeout(() => {
-        fireImg.style.left = kuma.style.left;
-        fireKuma.style.left = kuma.style.left;
-        fireKuma.style.top = kuma.style.top;
-        fadeinImg(fireKuma, kuma);
-        fadeinImg(backFire, back);
-        fadeinImg(eneFire, eneImg);
-        fadeinImg(fireRight, eneImg);
-        fadeinImg(fireLeft, eneImg);
-    }, 9000);
-    setTimeout(() => {
-        fireImg.classList.remove("d-none");
-        fireImg.classList.add("smash");
-    },11000)
-    setTimeout(() => {
-        fireImg.classList.add("d-none");
-        fireImg.classList.remove("smash");
-    }, 12000);
-    setTimeout(() => {
-        stopGame();
-        alert("自分に得点が入りました！！");
-        WinLose();
-    }, 13500);
-    gage = 0;
-    updateGauge();
-    score += 1;
-    result.textContent = score + "点";
-}
-
-function iceDrive() {
-    if (gage < 100 || !playFlag) {
-        return;
-    }
-    playFlag=false;
-    clearInterval(moveId);
-    clearInterval(eneId);
-    clearInterval(pointId);
-    iceMovie.classList.remove("d-none");
-    iceMovie.currentTime = 0;
-    iceMovie.play();
-    pinpon.classList.add("d-none");
-    message.classList.add("d-none");
-    eneGage = 0;
-    updateEneGauge();
-    setTimeout(() => {
-        iceMovie.classList.add("d-none");
-        iceKuma.style.left = kuma.style.left;
-        iceKuma.style.top = kuma.style.top;
-        fadeinImg(iceKuma, kuma);
-        fadeinImg(iceBack, back);
-    }, 8000);
-    setTimeout(() => {
-        pinpon.style.top = "40px";
-        pinpon.classList.remove("d-none");
-        pinpon.classList.add("rakka");
-    }, 9000);
-    setTimeout(() => {
-        pinpon.classList.add("d-none");
-        pinpon.classList.remove("rakka");
-        alert("相手に得点が入りました！！");
-        eneScore += 1;
-        ene.textContent = eneScore + "点";
-        stopGame();
-    }, 10000);
-}
-
-function fadeinImg(object, deleteObject) {
-    deleteObject.classList.add("d-none");
-    object.classList.remove("d-none");
-    object.classList.add("fadein");
-}
-
 
 function drawBall() {
     pinpon.style.left = x + "px";
@@ -438,24 +349,95 @@ function resetImg() {
     y = back.height - 30;
 }
 
-function godDrive() {
-    if (eneGage < 100 || !playFlag) {
+function playMovie(eneFlag) {
+    let movie = hissatuMovie;
+    if (eneFlag) {
+        movie = hissatuEneMovie;
+    }
+    if ((!eneFlag && gage < 100) || (eneFlag && eneGage < 100) || !playFlag) {
         return;
     }
-    playFlag=false;
     clearInterval(moveId);
     clearInterval(eneId);
     clearInterval(pointId);
-    godMovie.classList.remove("d-none");
-    godMovie.currentTime = 0;
-    godMovie.play();
+    playFlag = false;
+    movie.classList.remove("d-none");
+    movie.currentTime = 0;
+    movie.play();
     pinpon.classList.add("d-none");
-    message.classList.add("d-none");
-    eneGage = 0;
-    updateEneGauge();
     setTimeout(() => {
-        godMovie.classList.add("d-none");
+        movie.classList.add("d-none");
     }, 8000);
+
+    if (eneFlag) {
+        eneGage = 0;
+        updateEneGauge();
+    } else {
+        gage = 0;
+        updateGauge();
+    }
+}
+
+function fadeinImg(object, deleteObject) {
+    deleteObject.classList.add("d-none");
+    object.classList.remove("d-none");
+    object.classList.add("fadein");
+}
+
+function fireSmash() {
+    playMovie(false);
+    setTimeout(() => {
+        fireImg.style.left = kuma.style.left;
+        fireKuma.style.left = kuma.style.left;
+        fireKuma.style.top = kuma.style.top;
+        fadeinImg(fireKuma, kuma);
+        fadeinImg(backFire, back);
+        fadeinImg(eneFire, eneImg);
+        fadeinImg(fireRight, eneImg);
+        fadeinImg(fireLeft, eneImg);
+    }, 9000);
+    setTimeout(() => {
+        fireImg.classList.remove("d-none");
+        fireImg.classList.add("smash");
+    },11000);
+    setTimeout(() => {
+        fireImg.classList.add("d-none");
+        fireImg.classList.remove("smash");
+    }, 12000);
+    setTimeout(() => {
+        stopGame();
+        alert("自分に得点が入りました！！");
+        WinLose();
+        score += 1;
+        result.textContent = score + "点";
+    }, 13500);
+}
+
+function iceDrive() {
+    playMovie(true);
+    setTimeout(() => {
+        iceKuma.style.left = kuma.style.left;
+        iceKuma.style.top = kuma.style.top;
+        fadeinImg(iceKuma, kuma);
+        fadeinImg(iceBack, back);
+    }, 8000);
+    setTimeout(() => {
+        pinpon.style.top = "40px";
+        pinpon.classList.remove("d-none");
+        pinpon.classList.add("rakka");
+    }, 9000);
+    setTimeout(() => {
+        pinpon.classList.add("d-none");
+        pinpon.classList.remove("rakka");
+        alert("相手に得点が入りました！！");
+        eneScore += 1;
+        ene.textContent = eneScore + "点";
+        stopGame();
+    }, 10000);
+}
+
+function godDrive() {
+    playMovie(true);
     setTimeout(() => {
         godBack.classList.remove("d-none");
     }, 9000);
@@ -479,23 +461,7 @@ function godDrive() {
 }
 
 function hellSpin() {
-    if (eneGage < 100 || !playFlag) {
-        return;
-    }
-    playFlag=false;
-    clearInterval(moveId);
-    clearInterval(eneId);
-    clearInterval(pointId);
-    akumaMovie.classList.remove("d-none");
-    akumaMovie.currentTime = 0;
-    akumaMovie.play();
-    pinpon.classList.add("d-none");
-    message.classList.add("d-none");
-    eneGage = 0;
-    updateEneGauge();
-    setTimeout(() => {
-        akumaMovie.classList.add("d-none");
-    }, 8000);
+    playMovie(true);
     setTimeout(() => {
         akumaBack.style.top ="20px";
         akumaBack.style.left =  pinpon.style.left.replace("px", "");
@@ -515,20 +481,7 @@ function hellSpin() {
 }
 
 function specialNetto() {
-    if (gage < 100 || !playFlag) {
-        return;
-    }
-    playFlag=false;
-    clearInterval(moveId);
-    clearInterval(eneId);
-    clearInterval(pointId);
-    akiraMovie.classList.remove("d-none");
-    akiraMovie.currentTime = 0;
-    akiraMovie.play();
-    pinpon.classList.add("d-none");
-    setTimeout(() => {
-        akiraMovie.classList.add("d-none");
-    }, 8000);
+    playMovie(false);
     setTimeout(() => {
         netto.classList.remove("d-none");
         fadeinImg(netto, backFire);
@@ -542,29 +495,14 @@ function specialNetto() {
         pinpon.classList.remove("rakka-half");
         stopGame();
         alert("自分に得点が入りました！！");
+        score += 1;
+        result.textContent = score + "点";
         WinLose();
     }, 11000);
-    gage = 0;
-    updateGauge();
-    score += 1;
-    result.textContent = score + "点";
 }
 
 function noboriRyu() {
-    if (gage < 100 || !playFlag) {
-        return;
-    }
-    playFlag=false;
-    clearInterval(moveId);
-    clearInterval(eneId);
-    clearInterval(pointId);
-    pandaMovie.classList.remove("d-none");
-    pandaMovie.currentTime = 0;
-    pandaMovie.play();
-    pinpon.classList.add("d-none");
-    setTimeout(() => {
-        pandaMovie.classList.add("d-none");
-    }, 8000);
+    playMovie(false);
     setTimeout(() => {
         doragon.style.left = kuma.style.left;
         pinpon.style.left = (Number(kuma.style.left.replace("px", "")) +400) + "px";
@@ -582,9 +520,7 @@ function noboriRyu() {
         stopGame();
         alert("自分に得点が入りました！！");
         WinLose();
+        score += 1;
+        result.textContent = score + "点";
     }, 12000);
-    gage = 0;
-    updateGauge();
-    score += 1;
-    result.textContent = score + "点";
 }
