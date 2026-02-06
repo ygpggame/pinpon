@@ -26,8 +26,8 @@ let enemyCaracters = {
 };
 // 体験入学3　キャラクター選択する。数字を変えるとキャラクターが変わる。
 // 配列についての説明をする
-let myCara = myCaracters[ 0 ];  // 自分のキャラクター選択
-let eneCara = enemyCaracters[ 0 ];  // 敵キャラクター選択
+let myCara = myCaracters[ 0 ];  // 体験入学3 自分のキャラクター選択
+let eneCara = enemyCaracters[ 0 ];  // 体験入学3 敵キャラクター選択
 
 // 自分のキャラクターの要素の取得
 let kuma = document.getElementById("js-kuma");
@@ -56,12 +56,6 @@ if (eneCara === "kami") {
     hissatuEneMovie = document.getElementById("js-akuma-movie");
     eneFire = document.getElementById("js-fire-akuma");
 }
-
-let score = 0;  // 自分の初期スコア
-let eneScore = 0;  // 敵の初期スコア
-let kumaX = 950;  // 自分のX座標
-let basketX = 950;  // X座標
-let eneBasketX = 0;  // 敵カゴX座標
 
 // ボールの要素の取得
 let pinpon = document.getElementById("js-pinpon");
@@ -131,11 +125,6 @@ const loseArea = document.getElementById("js-lose");
 // リセットボタンの要素取得
 let restartButtons = document.getElementsByClassName("js-restart");
 
-let moveId = 0;  // タイマーID
-let kumId = 0;  // タイマーID
-let eneId = 0;  // タイマーID
-let pointId = 0;  // タイマーID
-let randId = 0;  // タイマーID
 // 体験入学 大きさの調整
 let backHeight = 700; // 体験入学 背景の高さ
 let backWidth = 1000; // 体験入学 背景の幅
@@ -145,6 +134,18 @@ let myCaraHeight = 100; // 体験入学 自分のキャラの高さ
 let myCaraWidth = 100; // 体験入学 自分のキャラの幅
 let eneCaraHeght = 100; // 体験入学 敵キャラの高さ
 let eneCaraWidth = 100; // 体験入学 敵キャラの幅
+
+let score = 0;  // 体験入学 自分の初期スコア
+let eneScore = 0;  // 体験入学 敵の初期スコア
+let kumaX = backWidth - 50;  // 自分のX座標
+let basketX = backWidth - 50;  // X座標
+let eneBasketX = 0;  // 敵カゴX座標
+let moveId = 0;  // タイマーID
+let kumId = 0;  // タイマーID
+let eneId = 0;  // タイマーID
+let pointId = 0;  // タイマーID
+let randId = 0;  // タイマーID
+
 // 画像サイズの調整する関数
 function imgSize() {
     back.style.height = backHeight + "px";
