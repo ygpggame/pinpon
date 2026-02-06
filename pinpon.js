@@ -75,7 +75,7 @@ const result = document.getElementById("js-result");
 let ene = document.getElementById("js-ene");
 
 let gage = 0;// 必殺技ゲージ
-let maxGage = 2; // 自分が必殺技に必要なTP数
+let maxGage = 10; // 自分が必殺技に必要なTP数
 let eneGage = 0; // 敵必殺技ゲージ
 let maxEneGage = 20;  // 敵が必殺技に必要なTP数
 let ballRandomMax = 3; // ボールのX軸ランダム変数最大値
